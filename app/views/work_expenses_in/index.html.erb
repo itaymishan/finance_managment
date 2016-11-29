@@ -1,0 +1,42 @@
+<h2>Welcome</h2>
+<%= link_to 'WorkExpenseIn', controller: 'work_expenses_in' %>
+</br>
+<%= link_to 'WorkExpenseOut', controller: 'work_expenses_out' %>
+</br>
+<%= link_to 'old_incomes', controller: 'old_incomes' %>
+</br>
+<%= link_to 'old_expenses', controller: 'old_expenses' %>
+
+<h3> Insert </h3>
+
+<%= form_for WorkExpenseIn.new, url: {action: "create"} do |f| %>
+  <%= f.label :amount %>
+  <%= f.text_field :amount %>
+  <br>
+  <%= f.label :currency %>
+  <%= f.text_field :currency, value: 'CAD' %>
+  <br>
+  <br>
+  <%= f.label :comments %>
+  <%= f.text_field :comments %>
+  <br>
+  <%= f.submit "Create" %>
+<% end %>
+
+
+<h1>Listing entries</h1>
+<table>
+  <tr>
+    <th>amount</th>
+    <th>currency</th>
+    <th>comments</th>
+  </tr>
+
+  <% @old_expenses.each do |expense| %>
+    <tr>
+      <td><%= expense.amount %></td>
+      <td><%= expense.currency %></td>
+      <td><%= expense.comments %></td>
+    </tr>
+  <% end %>
+</table>

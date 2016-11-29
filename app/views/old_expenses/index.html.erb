@@ -1,0 +1,64 @@
+<h2>Welcome</h2>
+<%= link_to 'WorkExpenseIn', controller: 'work_expenses_in' %>
+</br>
+<%= link_to 'WorkExpenseOut', controller: 'work_expenses_out' %>
+</br>
+<%= link_to 'old_incomes', controller: 'old_incomes' %>
+</br>
+<%= link_to 'old_expenses', controller: 'old_expenses' %>
+
+<h3> Insert </h3>
+
+<%= form_for OldExpense.new, url: {action: "create"} do |f| %>
+  <%= f.label :person %>
+  <%= f.select :person, ['רעות','איתי']  %>
+  <br>
+  <%= f.label :currency %>
+  <%= f.text_field :currency, value: 'CAD' %>
+  <br>
+  <%= f.label :expense_type %>
+  <%= f.select :expense_type, ['בית','אישי'] %>
+  <br>
+  <%= f.label :year %>
+  <%= f.text_field :year, value: DateTime.now.year %>
+  <br>
+  <%= f.label :month %>
+  <%= f.text_field :month, value: DateTime.now.month %>
+  <br>
+  <%= f.label :category %>
+  <%= f.select :category, ["ביגוד והנעלה", "דירה נהריה", "קנסות ודוחות", "קניות בסופר", "תחבורה ציבורית", "פלאפון", "הוצאות רמחל 4", "כבישי אגרה וחנייה", "מתנות",  "שירותי בריאות", "ZipCar",  "טיפוח ויופי", "חופשה", "שכר דירה", "אינטרנט", "בילויים ומסעדות", "ביטוח לאומי", "חשמל", "הוצאות רמחל 1", "פיתוח השקעות","משכנתא רמחל 1",  "אוכל בעבודה", "משכנתא רמחל 4",  "הוצאות בית"]%>
+  <br>
+  <%= f.label :amount %>
+  <%= f.text_field :amount %>
+  <br>
+  <%= f.label :comments %>
+  <%= f.text_field :comments %>
+  <br>
+  <%= f.submit "Create" %>
+<% end %>
+
+
+<h1>Listing entries</h1>
+<table>
+  <tr>
+    <th>year</th>
+    <th>month</th>
+    <th>category</th>
+    <th>person</th>
+    <th>amount</th>
+    <th>currency</th>
+    <th>comments</th>
+  </tr>
+
+  <% @old_expenses.each do |expense| %>
+    <tr>
+      <td><%= expense.year %></td>
+      <td><%= expense.month %></td>
+      <td><%= expense.category %></td>
+      <td><%= expense.person %></td>
+      <td><%= expense.amount %></td>
+      <td><%= expense.currency %></td>
+      <td><%= expense.comments %></td>
+    </tr>
+  <% end %>
+</table>
