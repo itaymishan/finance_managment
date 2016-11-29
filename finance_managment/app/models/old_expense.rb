@@ -22,15 +22,22 @@ require 'csv'
 
 class OldExpense < ActiveRecord::Base
 
-  validates :old_id, uniqueness: true
-  validates :insert_date, presence: true
+  # validates :old_id, uniqueness: true
+  # validates :insert_date, presence: true
   validates :month, presence: true
   validates :year, presence: true
   validates :category, presence: true
   validates :person, presence: true
   validates :amount, presence: true
   validates :currency, presence: true
-  validates :old_id, presence: true
+  # validates :old_id, presence: true
+
+  before_save :set_insert_date
+
+  def set_insert_date
+    self.insert_date = DateTime.now
+  end
+
 
   def self.import_from_csv
     csv_text = File.read('C:\\Users\\asus\\Desktop\\home_ex_db\\tmp.csv')
@@ -53,6 +60,5 @@ class OldExpense < ActiveRecord::Base
                         is_luxury: hash_row[8],
                         comments: hash_row[9],
                         currency: hash_row[10]) if hash_row.count == 11
-debugger
   end
 end
