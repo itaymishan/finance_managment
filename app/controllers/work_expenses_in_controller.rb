@@ -1,7 +1,7 @@
 class WorkExpensesInController < ApplicationController
   def create
     @old_expense = WorkExpenseIn.create(work_expense_params)
-    render action: :index
+    render json: @old_expense, status: :created
   end
 
   def index

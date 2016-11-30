@@ -15,7 +15,7 @@
 #
 require 'csv'
 class OldIncome < ActiveRecord::Base
-  validates :old_id, uniqueness: true
+  # validates :old_id, uniqueness: true
   validates :year, presence: true
   validates :month, presence: true
   validates :income_src, presence: true

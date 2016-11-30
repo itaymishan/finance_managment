@@ -2,7 +2,7 @@ class OldExpensesController < ApplicationController
 
   def create
     @old_expense = OldExpense.create(old_expense_params)
-    render action: :index
+    render json: @old_expense, status: :created
   end
 
   def index

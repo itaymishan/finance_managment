@@ -1,8 +1,8 @@
 class OldIncomesController < ApplicationController
 
   def create
-    @old_income = OldIncome.create(work_expense_params)
-    render action: :index
+    @old_income = OldIncome.create!(old_income_params)
+    render json: @old_income, status: :created
   end
 
   def index
@@ -13,8 +13,8 @@ class OldIncomesController < ApplicationController
     @old_income = OldIncome.new
   end
 
-  def work_expense_params
-    params.require(:old_income_params).permit(:year, :month, :income_src, :amount, :comments, :currency)
+  def old_income_params
+    params.require(:old_income).permit(:year, :month, :income_src, :amount, :comments, :currency)
   end
 
 end
