@@ -1,4 +1,4 @@
-<h2>Welcome</h2>
+<h2>Insert Income</h2>
 <%= link_to 'WorkExpenseIn', controller: 'work_expenses_in' %>
 </br>
 <%= link_to 'WorkExpenseOut', controller: 'work_expenses_out' %>
@@ -7,7 +7,7 @@
 </br>
 <%= link_to 'old_expenses', controller: 'old_expenses' %>
 
-<h3> Insert </h3>
+<h3> Insert Income </h3>
 
 <%= form_for OldIncome.new, url: {action: "create"} do |f| %>
   <%= f.label :income_src %>
@@ -32,7 +32,7 @@
 <% end %>
 
 
-<h1>Listing entries</h1>
+<h1>Old Incomes</h1>
 <table>
   <tr>
     <th>year</th>
