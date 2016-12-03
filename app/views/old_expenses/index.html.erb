@@ -64,3 +64,6 @@
     </tr>
   <% end %>
 </table>
+
+<p><%= pie_chart OldExpense.group(:category).count %></p>
+<p><%= pie_chart OldIncome.group(:income_src).count %></p>
