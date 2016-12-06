@@ -3,7 +3,7 @@ class CreateCategories < ActiveRecord::Migration
     create_table :categories do |t|
       t.string  :english_name
       t.string  :hebrew_name
-      t.integer :type
+      t.boolean :luxury
 
       t.timestamps null: false
     end

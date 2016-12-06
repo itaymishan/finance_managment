@@ -38,6 +38,24 @@ class OldExpense < ActiveRecord::Base
     self.insert_date = DateTime.now
   end
 
+  def migrate_old_to_new
+    category = Category.find_or_create_by(hebrew_name: self.category)
+    user = User.find_or_create_by(first_name: self.person)
+    expense_type = self.expense_type == 'אישי' ? 'personal' : 'home'
+    currency = Currency.find_or_create_by(name: self.currency)
+    luxury = self.is_luxury == 'כן' ? true : false
+
+    expense = Expense.create!(year: self.year,
+                    month: self.month,
+                    user: user,
+                    category: category,
+                    expense_type: expense_type,
+                    amount: self.amount.to_d,
+                    currency: currency,
+                    luxury: luxury,
+                    comments: self.comments)
+  end
+
 
   def self.import_from_csv
     csv_text = File.read('C:\\Users\\asus\\Desktop\\home_ex_db\\tmp.csv')

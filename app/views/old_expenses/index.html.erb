@@ -7,6 +7,8 @@
 </br>
 <%= link_to 'old_expenses', controller: 'old_expenses' %>
 
+<p><%= pie_chart Expense.joins(:category).group('categories.hebrew_name').having('SUM(expenses.amount) > 5000').sum(:amount) %></p>
+
 <h3> Insert New Expense </h3>
 
 <%= form_for OldExpense.new, url: {action: "create"} do |f| %>
@@ -64,6 +66,3 @@
     </tr>
   <% end %>
 </table>
-
-<p><%= pie_chart OldExpense.group(:category).having('COUNT(old_expenses.id) > 50').count %></p>
-<p><%= pie_chart OldIncome.group(:income_src).count %></p>

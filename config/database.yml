@@ -15,34 +15,36 @@
 # gem 'pg'
 #
 
-default: &default
-  adapter: postgresql
-  encoding: unicode
-  # For details on connection pooling, see rails configuration guide
-  # http://guides.rubyonrails.org/configuring.html#database-pooling
-  pool: 5
-  username: eeuivwrefaoszx
-  password: 5wEleEXcKp4PrPn36qR_0Yep1r
-
-development:
-  <<: *default
-  host: ec2-54-243-203-141.compute-1.amazonaws.com
-  port: 5432
-  database: dc4k6su6qh1v61
-
-
 # default: &default
 #   adapter: postgresql
 #   encoding: unicode
 #   # For details on connection pooling, see rails configuration guide
 #   # http://guides.rubyonrails.org/configuring.html#database-pooling
 #   pool: 5
-#   username: asus
-#   password: home_user
+#   username: eeuivwrefaoszx
+#   password: 5wEleEXcKp4PrPn36qR_0Yep1r
 #
 # development:
 #   <<: *default
-#   database: finance_managment_development
+#   host: ec2-54-243-203-141.compute-1.amazonaws.com
+#   port: 5432
+#   database: dc4k6su6qh1v61
+
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: 5
+  # username: asus
+  # password: home_user
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+
+development:
+  <<: *default
+  database: finance_mgr
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.

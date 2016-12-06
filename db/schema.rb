@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20161204003703) do
   create_table "categories", force: :cascade do |t|
     t.string   "english_name"
     t.string   "hebrew_name"
-    t.integer  "type"
+    t.boolean  "luxury"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
@@ -31,12 +31,26 @@ ActiveRecord::Schema.define(version: 20161204003703) do
   end
 
   create_table "expenses", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "year"
+    t.integer  "month"
+    t.integer  "category_id"
+    t.integer  "expense_type"
+    t.integer  "user_id"
+    t.decimal  "amount",                       null: false
+    t.integer  "currency_id",                  null: false
+    t.text     "comments"
+    t.boolean  "luxury",       default: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
+  add_index "expenses", ["category_id"], name: "index_expenses_on_category_id", using: :btree
+  add_index "expenses", ["currency_id"], name: "index_expenses_on_currency_id", using: :btree
+  add_index "expenses", ["user_id"], name: "index_expenses_on_user_id", using: :btree
+
   create_table "incomes", force: :cascade do |t|
-    t.string   "source"
+    t.integer  "source"
+    t.decimal  "amount"
     t.text     "comments"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
