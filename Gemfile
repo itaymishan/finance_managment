@@ -29,6 +29,7 @@ gem 'chartkick'
 # gem 'devise'
 # gem 'activeadmin', '~> 1.0.0.pre4'
 gem 'money'
+gem 'dotenv-rails', :groups => [:development, :test]
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
