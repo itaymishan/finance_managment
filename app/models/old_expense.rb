@@ -59,7 +59,7 @@ class OldExpense < ActiveRecord::Base
 
   def self.import_from_csv
     csv_text = File.read('C:\\Users\\asus\\Desktop\\home_ex_db\\tmp.csv')
-    csv = CSV.parse(csv_text, :headers => true)
+    csv = CSV.parse(csv_text, :headers => false)
     csv.each do |row|
       create_object(row.to_hash.keys)
       create_object(row.to_hash.values)

@@ -4,9 +4,9 @@ class CreateExpenses < ActiveRecord::Migration
     create_table :expenses do |t|
       t.integer     :year
       t.integer     :month
-      t.references  :category, index: true, forign_key: true, index: true
+      t.references  :category, index: true, forign_key: true
       t.integer     :expense_type
-      t.references  :user, index: true, forign_key: true, index: true
+      t.references  :user, index: true, forign_key: true
       t.decimal     :amount, null: false
       t.references  :currency, null: false, forign_key: true, index: true
       t.text        :comments

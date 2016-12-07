@@ -11,7 +11,7 @@
 #
 
 class User < ActiveRecord::Base
-
+  # - Relations - #
   has_many :expenses
 
 end

@@ -9,6 +9,6 @@
 #
 
 class Currency < ActiveRecord::Base
-
+  # - Relations - #
   has_many :expenses
 end

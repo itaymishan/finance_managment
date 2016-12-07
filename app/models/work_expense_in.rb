@@ -11,8 +11,6 @@
 #  updated_at :datetime         not null
 #
 
-require 'csv'
-
 class WorkExpenseIn < ActiveRecord::Base
 
 end

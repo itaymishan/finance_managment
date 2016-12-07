@@ -28,6 +28,7 @@ gem 'awesome_print'
 gem 'chartkick'
 # gem 'devise'
 # gem 'activeadmin', '~> 1.0.0.pre4'
+gem 'money'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
