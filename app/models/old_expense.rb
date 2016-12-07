@@ -58,11 +58,10 @@ class OldExpense < ActiveRecord::Base
 
 
   def self.import_from_csv
-    csv_text = File.read('C:\\Users\\asus\\Desktop\\home_ex_db\\tmp.csv')
+    csv_text = File.read('C:\\Users\\asus\\Desktop\\home_ex_db\\expenses.csv')
     csv = CSV.parse(csv_text, :headers => false)
     csv.each do |row|
-      create_object(row.to_hash.keys)
-      create_object(row.to_hash.values)
+      create_object(row)
     end
   end
 
@@ -75,8 +74,8 @@ class OldExpense < ActiveRecord::Base
                         person: hash_row[5],
                         expense_type: hash_row[6],
                         amount: hash_row[7],
-                        is_luxury: hash_row[8],
-                        comments: hash_row[9],
-                        currency: hash_row[10]) if hash_row.count == 11
+                        is_luxury: hash_row[9],
+                        comments: hash_row[10],
+                        currency: hash_row[12]) if hash_row.count == 13
   end
 end

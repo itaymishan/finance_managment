@@ -6,7 +6,7 @@ class OldExpensesController < ApplicationController
   end
 
   def index
-    @old_expenses = OldExpense.order(:id).last(20).reverse
+    @old_expenses = OldExpense.order(:year, :month).last(10000).reverse
   end
 
   def new
