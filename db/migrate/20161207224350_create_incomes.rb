@@ -1,5 +1,6 @@
 class CreateIncomes < ActiveRecord::Migration
   def change
+    drop_table :incomes
     create_table :incomes do |t|
       t.references :income_source, index: true, forign_key: true
       t.decimal :amount, null: false
