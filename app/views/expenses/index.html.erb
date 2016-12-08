@@ -3,8 +3,9 @@
 
 <h3>summary</h3>
 <table>
-  <tr>Total Expenses(CAD): <%= number_to_currency(@expenses.select{|e| e.currency.name = 'CAD'}.map{|e| e.amount}.sum) %></tr>
-  <tr>Total Expenses(ILS): <%= @expenses.select{|e| e.currency.name = 'ILS'}.map{|e| e.amount}.sum %></tr>
+  <tr>Total Expenses(CAD): <%= number_to_currency(@expenses.select{|e| e.currency.name == 'CAD'}.map{|e| e.amount}.sum) %></tr>
+  <br>
+  <tr>Total Expenses(ILS): <%= @expenses.select{|e| e.currency.name == 'ILS'}.map{|e| e.amount}.sum %></tr>
 </table>
 
 <p><%= select_month(Date.today) %></p>
