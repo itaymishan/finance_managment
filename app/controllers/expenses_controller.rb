@@ -3,7 +3,7 @@ class ExpensesController < ApplicationController
   before_action :set_expenses, on: :index
 
   def index
-    @expenses
+    @expenses ||= Expense.last(50)
   end
 
   def create

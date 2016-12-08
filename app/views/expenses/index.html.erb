@@ -6,6 +6,8 @@
   <tr>Total Expenses: <%= number_to_currency(@expenses.map{|e| e.amount}.sum) %></tr>
 </table>
 
+<p><%= select_month(Date.today) %></p>
+
 <div class="filter_options_container">
   <form class="filter_form">
     <%= select("filter", "year", [2013, 2014, 2015, 2016], selected: @expenses.last.year) %>
