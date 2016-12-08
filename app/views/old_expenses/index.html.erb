@@ -6,6 +6,10 @@
 <%= link_to 'old_incomes', controller: 'old_incomes' %>
 </br>
 <%= link_to 'old_expenses', controller: 'old_expenses' %>
+</br>
+<%= link_to 'Insert Expense', controller: 'expenses', method: :create %>
+</br>
+<%= link_to 'View Expenses', controller: 'expenses', method: :index %>
 
 <p><%= pie_chart Expense.joins(:category).group('categories.hebrew_name').having('SUM(expenses.amount) > 5000').sum(:amount) %></p>
 

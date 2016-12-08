@@ -1,2 +1,40 @@
 <h1>Expenses#index</h1>
 <p>Find me in app/views/expenses/index.html.erb</p>
+
+<h3>summary</h3>
+<table>
+  <tr>Total Expenses: <%= number_to_currency(@expenses.map{|e| e.amount}.sum) %></tr>
+</table>
+
+<div class="filter_options_container">
+  <form class="filter_form">
+    <%= select("filter", "year", [2013, 2014, 2015, 2016], selected: @expenses.last.year) %>
+    <%= select("filter", "month", [1,2,3,4,5,6,7,8,9,10,11,12], selected: @expenses.last.month) %>
+    <input type="submit" value="Filter" />
+  </form>
+</div>
+
+<h1>Expenses</h1>
+<table>
+  <tr>
+    <th>year</th>
+    <th>month</th>
+    <th>category</th>
+    <th>person</th>
+    <th>amount</th>
+    <th>currency</th>
+    <th>comments</th>
+  </tr>
+
+  <% @expenses.each do |expense| %>
+    <tr>
+      <td><%= expense.year %></td>
+      <td><%= expense.month %></td>
+      <td><%= expense.category.hebrew_name %></td>
+      <td><%= expense.user.first_name %></td>
+      <td><%= expense.amount %></td>
+      <td><%= expense.currency.name %></td>
+      <td><%= expense.comments %></td>
+    </tr>
+  <% end %>
+</table>

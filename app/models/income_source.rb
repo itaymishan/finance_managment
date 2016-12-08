@@ -10,4 +10,7 @@
 #
 
 class IncomeSource < ActiveRecord::Base
+
+  has_many :incomes
+
 end
