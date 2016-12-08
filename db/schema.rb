@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161207234046) do
+ActiveRecord::Schema.define(version: 20161208000419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,9 +57,14 @@ ActiveRecord::Schema.define(version: 20161207234046) do
   end
 
   create_table "incomes", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "income_source_id"
+    t.decimal  "amount",           null: false
+    t.text     "comments"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
+
+  add_index "incomes", ["income_source_id"], name: "index_incomes_on_income_source_id", using: :btree
 
   create_table "old_expenses", force: :cascade do |t|
     t.string   "old_id"
@@ -73,8 +78,9 @@ ActiveRecord::Schema.define(version: 20161207234046) do
     t.string   "is_luxury"
     t.string   "comments"
     t.string   "currency"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.boolean  "exported",     default: false
   end
 
   create_table "old_incomes", force: :cascade do |t|
