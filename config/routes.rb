@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   resources :old_expenses
   resources :expenses
+  resources :incomes
 
   resources :work_expenses_in
   resources :work_expenses_out

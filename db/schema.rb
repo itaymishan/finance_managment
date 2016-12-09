@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161208000419) do
+ActiveRecord::Schema.define(version: 20161209155130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 20161208000419) do
   add_index "expenses", ["currency_id"], name: "index_expenses_on_currency_id", using: :btree
   add_index "expenses", ["user_id"], name: "index_expenses_on_user_id", using: :btree
 
-  create_table "income_source", force: :cascade do |t|
+  create_table "income_sources", force: :cascade do |t|
     t.string   "name",                      null: false
     t.boolean  "active",     default: true, null: false
     t.datetime "created_at",                null: false
@@ -62,8 +62,12 @@ ActiveRecord::Schema.define(version: 20161208000419) do
     t.text     "comments"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.integer  "year",             null: false
+    t.integer  "month",            null: false
+    t.integer  "currency_id",      null: false
   end
 
+  add_index "incomes", ["currency_id"], name: "index_incomes_on_currency_id", using: :btree
   add_index "incomes", ["income_source_id"], name: "index_incomes_on_income_source_id", using: :btree
 
   create_table "old_expenses", force: :cascade do |t|

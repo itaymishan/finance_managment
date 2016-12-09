@@ -40,4 +40,19 @@ class OldIncome < ActiveRecord::Base
                         comments: hash_row[5],
                         currency: hash_row[6]) if hash_row.count == 7
   end
+
+
+  def self.old_to_new
+    OldIncome.all.each do |e|
+      src = IncomeSource.find_or_create_by(name: e.income_src)
+      currency = Currency.find_or_create_by(name: e.currency)
+      Income.create!(year: e.year.to_i,
+                      month: e.month.to_i,
+                      income_source: src,
+                      amount: e.amount.to_d,
+                      comments: e.comments,
+                      currency: currency)
+    end
+  end
+
 end
