@@ -11,6 +11,10 @@
 
 class IncomeSource < ActiveRecord::Base
 
+  # - Relations - #
   has_many :incomes
+
+  # - Scopes - #
+  scope :active, -> { where(active: true) }
 
 end

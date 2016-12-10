@@ -14,4 +14,7 @@
 class Category < ActiveRecord::Base
   # - Relations - #
   has_many :expenses
+
+  scope :active, -> { where(active: true) }
+  
 end

@@ -7,7 +7,14 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+  <%= link_to 'WorkExpenseIn', controller: 'work_expenses_in' %>
+  <%= link_to 'WorkExpenseOut', controller: 'work_expenses_out' %>
+  <%= link_to 'old_incomes', controller: 'old_incomes' %>
+  <%= link_to 'old_expenses', controller: 'old_expenses' %>
+  </br>
+  <%= link_to 'New Expense', controller: 'expenses', method: :create %>
+  <%= link_to 'New Income', controller: 'incomes', method: :new %>
+  <%= link_to 'View Expenses', controller: 'expenses', method: :index %>
 <%= yield %>
 
 </body>

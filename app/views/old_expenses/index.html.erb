@@ -1,18 +1,3 @@
-<h2>Insert New Expense</h2>
-<%= link_to 'WorkExpenseIn', controller: 'work_expenses_in' %>
-</br>
-<%= link_to 'WorkExpenseOut', controller: 'work_expenses_out' %>
-</br>
-<%= link_to 'old_incomes', controller: 'old_incomes' %>
-</br>
-<%= link_to 'old_expenses', controller: 'old_expenses' %>
-</br>
-<%= link_to 'Insert Expense', controller: 'expenses', method: :create %>
-</br>
-<%= link_to 'View Expenses', controller: 'expenses', method: :index %>
-</br>
-<%= link_to 'New Income', controller: 'incomes', method: :new %>
-
 <p><%= pie_chart Expense.joins(:category).group('categories.hebrew_name').having('SUM(expenses.amount) > 5000').sum(:amount) %></p>
 
 <h3> Insert New Expense </h3>
@@ -58,6 +43,7 @@
     <th>amount</th>
     <th>currency</th>
     <th>comments</th>
+    <th>exported</th>
   </tr>
 
   <% @old_expenses.each do |expense| %>
@@ -69,6 +55,7 @@
       <td><%= expense.amount %></td>
       <td><%= expense.currency %></td>
       <td><%= expense.comments %></td>
+      <td><%= expense.exported %></td>
     </tr>
   <% end %>
 </table>
