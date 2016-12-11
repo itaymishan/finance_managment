@@ -21,7 +21,7 @@
   <br>
   <%= f.label :currency_id %>
   <%  curr_array = Currency.all.map { |cur| [cur.name, cur.id] } %>
-  <%= f.select :currency_id, curr_array %>
+  <%= f.select :currency_id, curr_array.sort %>
   <br>
   <%= f.label :amount %>
   <%= f.text_field :amount %>

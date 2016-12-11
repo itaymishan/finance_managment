@@ -4,23 +4,23 @@
 <%= form_for @income, url: {action: "create"} do |f| %>
   <%= f.label :year %>
   <%= f.text_field :year, value: DateTime.now.year %>
-
+  <br>
   <%= f.label :month %>
   <%= f.text_field :month, value: DateTime.now.month %>
-
+  <br>
   <%= f.label :income_source_id %>
   <%  income_array = IncomeSource.all.map { |src| [src.name, src.id] } %>
   <%= f.select :income_source_id, income_array %>
-
+  <br>
   <%= f.label :amount %>
   <%= f.text_field :amount %>
-
+  <br>
   <%= f.label :currency_id %>
   <%  curr_array = Currency.all.map { |cur| [cur.name, cur.id] } %>
-  <%= f.select :currency_id, curr_array %>
-
+  <%= f.select :currency_id, curr_array.sort %>
+  <br>
   <%= f.label :comments %>
   <%= f.text_field :comments %>
-
+  <br>
   <%= f.submit "Create" %>
 <% end %>
