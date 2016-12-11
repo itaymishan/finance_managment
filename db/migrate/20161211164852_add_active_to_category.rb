@@ -1,5 +1,7 @@
 class AddActiveToCategory < ActiveRecord::Migration
   def change
-    add_column :category, :active, :boolean, default: true, null: false
+    unless column_exists? :categories, :active
+      add_column :categories, :active, :boolean, default: true, null: false
+    end
   end
 end
