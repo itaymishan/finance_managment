@@ -38,7 +38,7 @@ class IncomesController < ApplicationController
 
   def set_incomes
     if params[:filter].present?
-      @incomes = Income.where(year: params[:filter][:year], month: params[:filter][:month])
+      @incomes = Income.where(year: params[:filter][:year], month: params[:filter][:month]).order(id: :desc)
     end
   end
 
