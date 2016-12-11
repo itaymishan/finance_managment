@@ -9,7 +9,7 @@ class IncomesController < ApplicationController
   def create
     @income = Income.new(income_params)
     if @income.save!
-      render json: @income, status: :created
+      redirect_to action: "index"
     end
   end
 
