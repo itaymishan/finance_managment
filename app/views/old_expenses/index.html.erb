@@ -1,4 +1,3 @@
-<p><%= pie_chart Expense.joins(:category).group('categories.hebrew_name').having('SUM(expenses.amount) > 5000').sum(:amount) %></p>
 
 <h3> Insert New Expense </h3>
 

@@ -9,7 +9,7 @@
   <%= f.text_field :month, value: DateTime.now.month %>
   <br>
   <%= f.label :category_id %>
-  <%  expense_array = Category.all.map { |src| [src.hebrew_name, src.id] } %>
+  <%  expense_array = Category.active.map { |src| [src.hebrew_name, src.id] } %>
   <%= f.select :category_id, expense_array %>
   <br>
   <%= f.label :user_id %>

@@ -4,11 +4,13 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'old_expenses#index'
+  root 'dashboard#index'
 
   resources :old_expenses
   resources :expenses
   resources :incomes
+
+  resources :dashboard
 
   resources :work_expenses_in
   resources :work_expenses_out

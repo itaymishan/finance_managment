@@ -9,7 +9,7 @@
   <%= f.text_field :month, value: DateTime.now.month %>
   <br>
   <%= f.label :income_source_id %>
-  <%  income_array = IncomeSource.all.map { |src| [src.name, src.id] } %>
+  <%  income_array = IncomeSource.active.map { |src| [src.name, src.id] } %>
   <%= f.select :income_source_id, income_array %>
   <br>
   <%= f.label :amount %>
