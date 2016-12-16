@@ -1,2 +1,11 @@
 <h1>Dashboard</h1>
 <p>Find me in app/views/dashboard/dashboard.html.erb</p>
+
+<%= pie_chart Income.joins(:income_source).group('income_sources.name').sum(:amount) %>
+
+<%= pie_chart Income.income_groups %>
+<%= pie_chart Expense.group_by_currency %>
+
+
+<%= line_chart IncomeSource.all.map { |src|
+   { name: src.name, data: src.incomes.group([:year, :month]).order('year, month ASC').sum(:amount)}} %>

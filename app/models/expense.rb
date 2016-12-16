@@ -24,8 +24,12 @@ class Expense < ActiveRecord::Base
   belongs_to :currency
 
   enum expense_types: {
-  home: 'home',
-  personal: 'personal'
-}
+    home: 'home',
+    personal: 'personal'
+  }
+
+  scope :group_by_currency, -> {
+    joins(:currency).group('currencies.name').sum(:amount)
+  }
 
 end

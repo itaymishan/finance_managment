@@ -18,4 +18,12 @@ class Income < ActiveRecord::Base
   belongs_to :income_source
   belongs_to :currency
 
+  scope :income_groups, -> {
+    Income.joins(:currency)
+    .group('currencies.name')
+    .joins(:income_source)
+    .group('income_sources.name')
+    .sum(:amount)
+  }
+
 end

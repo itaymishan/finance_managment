@@ -15,6 +15,6 @@ class IncomeSource < ActiveRecord::Base
   has_many :incomes
 
   # - Scopes - #
-  scope :active, -> { where(active: true) }
+  scope :active, -> { where(active: true) }  
 
 end

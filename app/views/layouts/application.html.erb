@@ -8,14 +8,18 @@
 </head>
 <body>
   Do not use:
-  <%= link_to 'WorkExpenseIn', controller: 'work_expenses_in' %>
-  <%= link_to 'WorkExpenseOut', controller: 'work_expenses_out' %>
   <%= link_to 'old_incomes', controller: 'old_incomes' %>
   <%= link_to 'old_expenses', controller: 'old_expenses' %>
   </br>
   </br>
   </br>
     <strong>
+      <%= link_to 'DashBoard', controller: 'dashboard' %>
+      <br>
+      <%= link_to 'WorkExpenseIn', controller: 'work_expenses_in' %>
+      <br>
+      <%= link_to 'WorkExpenseOut', controller: 'work_expenses_out' %>
+      <br>
       <a href="/expenses/new">New Expense</a>
       </br>
       <%= link_to 'View Expenses', controller: 'expenses', method: :index %>
