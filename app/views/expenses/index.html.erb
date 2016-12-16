@@ -3,13 +3,13 @@
 
 <h3>summary</h3>
 <table>
-  <tr>Total Expenses(CAD): <%= @expenses.select{|e| e.currency.name == 'CAD'}.map{|e| e.amount}.sum %></tr>
+  <tr>Expenses(ILS): <%= ils_sum = @expenses.select{|e| e.currency.name == 'ILS'}.map{|e| e.amount}.sum %></tr>
   <br>
-  <tr>Total Expenses(ILS): <%= @expenses.select{|e| e.currency.name == 'ILS'}.map{|e| e.amount}.sum %></tr>
+  <tr>Expenses(CAD): <%= cad_sum = @expenses.select{|e| e.currency.name == 'CAD'}.map{|e| e.amount}.sum %></tr>
   <br>
-  <tr>Total Expenses(ILS): <%= ils_sum = @expenses.select{|e| e.currency.name == 'ILS'}.map{|e| e.amount}.sum %></tr>
-  <tr>Total Expenses(CAD): <%= cad_sum = @expenses.select{|e| e.currency.name == 'CAD'}.map{|e| e.amount}.sum %></tr>
-  <tr><%= cad_sum + currency_convert('ILS', 'CAD', ils_sum) %></tr>
+  <tr>Total Expenses(CAD):<%= cad_sum + currency_convert('ILS', 'CAD', ils_sum) %></tr>
+  <br>
+  <tr>Total Expenses(ILS):<%= cad_sum + currency_convert('CAD', 'ILS', cad_sum) %></tr>
 </table>
 
 <div class="filter_options_container">
