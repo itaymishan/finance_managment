@@ -1,10 +1,10 @@
 class ExpensesController < ApplicationController
 
-  before_filter :sanitize_page_params
+  before_filter :sanitize_expense_params
   before_action :set_expenses, on: :index
 
   def index
-    @expenses ||= Expense.last(50)
+    @expenses ||= Expense.last(50).sort_by(&:created_at).reverse
   end
 
   def create
@@ -30,7 +30,7 @@ class ExpensesController < ApplicationController
     params.require(:expense).permit(:category_id, :amount, :comments, :year, :month, :currency_id, :expense_type, :user_id)
   end
 
-  def sanitize_page_params
+  def sanitize_expense_params
     params[:income_source_id] = params[:income_source_id].to_i
     params[:amount] = params[:amount].to_i
     params[:year] = params[:year].to_i

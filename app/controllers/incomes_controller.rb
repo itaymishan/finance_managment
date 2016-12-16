@@ -14,7 +14,7 @@ class IncomesController < ApplicationController
   end
 
   def index
-    @incomes ||= Income.all
+    @incomes ||= Income.last(50).sort_by(&:created_at).reverse
   end
 
   def new
