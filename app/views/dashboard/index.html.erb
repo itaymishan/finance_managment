@@ -1,6 +1,8 @@
 <h1>Dashboard</h1>
 <p>Find me in app/views/dashboard/dashboard.html.erb</p>
 
+<h2>Bucket: <%= WorkExpenseIn.all.map{|w| w.amount.to_d}.sum -  WorkExpenseOut.all.map{|w| w.amount.to_d}.sum%>$</h2>
+
 <%= pie_chart Income.joins(:income_source).group('income_sources.name').sum(:amount) %>
 
 <%= line_chart IncomeSource.all.map { |src|
