@@ -18,12 +18,24 @@ class ExpensesController < ApplicationController
   end
 
   def show
+    @expense = Expense.find(params[:id])
   end
 
   def delete
   end
 
+  def edit
+    @expense = Expense.find(params[:id])
+  end
+
   def update
+    @expense = Expense.find(params[:id])
+
+    if @expense.update(expense_params)
+      redirect_to @expense
+    else
+      render 'edit'
+    end
   end
 
   def expense_params
@@ -44,5 +56,4 @@ class ExpensesController < ApplicationController
       @expenses = Expense.where(year: params[:filter][:year], month: params[:filter][:month]).order(id: :desc)
     end
   end
-
 end

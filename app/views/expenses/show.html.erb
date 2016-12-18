@@ -1,2 +1,39 @@
 <h1>Expenses#show</h1>
 <p>Find me in app/views/expenses/show.html.erb</p>
+
+<%= link_to 'Back', expenses_path %>
+
+<p>
+  <strong>Year:</strong>
+  <%= @expense.year %>
+</p>
+
+<p>
+  <strong>Month:</strong>
+  <%= @expense.month %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @expense.category.hebrew_name %>
+</p>
+
+<p>
+  <strong>Person:</strong>
+  <%= @expense.user.first_name %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @expense.amount %>
+</p>
+
+<p>
+  <strong>Currency:</strong>
+  <%= @expense.currency.name %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @expense.comments %>
+</p>

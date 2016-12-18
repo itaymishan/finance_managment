@@ -1,0 +1,56 @@
+<h1>Expenses#update</h1>
+<p>Find me in app/views/expenses/update.html.erb</p>
+
+<h1>Edit expense</h1>
+
+<%= form_for(@expense) do |f| %>
+
+  <% if @expense.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@expense.errors.count, "error") %> prohibited
+        this expense from being saved:
+      </h2>
+      <ul>
+        <% @expense.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.label :year %>
+  <%= f.text_field :year, value: DateTime.now.year %>
+
+  <%= f.label :month %>
+  <%= f.text_field :month, value: DateTime.now.month %>
+  <br>
+  <%= f.label :category_id %>
+  <%  expense_array = Category.active.map { |src| [src.hebrew_name, src.id] } %>
+  <%= f.select :category_id, expense_array %>
+  <br>
+  <%= f.label :user_id %>
+  <%  users_array = User.all.map { |src| [src.first_name, src.id] } %>
+  <%= f.select :user_id, users_array %>
+  <br>
+  <%= f.label :expense_type %>
+  <%= f.select :expense_type, Expense::expense_types %>
+  <br>
+  <%= f.label :currency_id %>
+  <%  curr_array = Currency.all.map { |cur| [cur.name, cur.id] } %>
+  <%= f.select :currency_id, curr_array.sort %>
+  <br>
+  <%= f.label :amount %>
+  <%= f.text_field :amount %>
+  <br>
+  <%= f.label :comments %>
+  <%= f.text_field :comments %>
+  <br>
+
+  <p>
+    <%= f.submit %>
+  </p>
+
+<% end %>
+
+<%= link_to 'Back', expenses_path %>

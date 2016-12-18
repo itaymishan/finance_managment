@@ -41,6 +41,7 @@
       <td><%= expense.amount %></td>
       <td><%= expense.currency.name %></td>
       <td><%= expense.comments %></td>
+      <td><%= link_to 'Edit', edit_expense_path(expense) %></td>
     </tr>
   <% end %>
 </table>
