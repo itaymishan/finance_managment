@@ -2,7 +2,7 @@ class IncomesController < ApplicationController
 
   before_filter :sanitize_page_params
   before_action :set_incomes, on: :index
-  before_action :set_income, except: :index
+  before_action :set_income, except: [:index, :new]
 
   def show
   end
