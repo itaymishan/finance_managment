@@ -2,9 +2,10 @@ class IncomesController < ApplicationController
 
   before_filter :sanitize_page_params
   before_action :set_incomes, on: :index
-  before_action :set_income, except: [:index, :new]
+  # before_action :set_income, on: [:destroy, :update]
 
   def show
+    @income = Income.find(params[:id])
   end
 
   def create
@@ -33,6 +34,8 @@ class IncomesController < ApplicationController
   end
 
   def destroy
+    @income = Income.find(params[:id])
+
     @income.destroy!
     redirect_to action: "index"
   end

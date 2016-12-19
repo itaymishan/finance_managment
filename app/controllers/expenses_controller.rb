@@ -2,7 +2,7 @@ class ExpensesController < ApplicationController
 
   before_filter :sanitize_expense_params
   before_action :set_expenses, on: :index
-  before_action :set_expense, except: [:index, :new]
+  # before_action :set_expense, on: [:destroy, :edit, :update]
 
   def index
     @expenses ||= Expense.last(10).sort_by(&:created_at).reverse
@@ -18,16 +18,18 @@ class ExpensesController < ApplicationController
   end
 
   def show
-    @expense
+    @expense = Expense.find(params[:id])
   end
 
   def destroy
+    @expense = Expense.find(params[:id])
+
     @expense.destroy!
     redirect_to action: "index"
   end
 
   def edit
-    @expense
+    @expense = Expense.find(params[:id])
   end
 
   def update
