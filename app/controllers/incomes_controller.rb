@@ -2,6 +2,7 @@ class IncomesController < ApplicationController
 
   before_filter :sanitize_page_params
   before_action :set_incomes, on: :index
+  before_action :set_income, except: :index
 
   def show
   end
@@ -14,14 +15,26 @@ class IncomesController < ApplicationController
   end
 
   def index
-    @incomes ||= Income.last(50).sort_by(&:created_at).reverse
+    @incomes ||= Income.last(10).sort_by(&:created_at).reverse
   end
 
   def new
     @income = Income.new
   end
 
-  def delete
+  def update
+    @income = Income.find(params[:id])
+
+    if @income.update(income_params)
+      redirect_to action: 'index'
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @income.destroy!
+    redirect_to action: "index"
   end
 
   def income_params
@@ -40,6 +53,10 @@ class IncomesController < ApplicationController
     if params[:filter].present?
       @incomes = Income.where(year: params[:filter][:year], month: params[:filter][:month]).order(id: :desc)
     end
+  end
+
+  def set_income
+    @income = Income.find(params[:id])
   end
 
 end

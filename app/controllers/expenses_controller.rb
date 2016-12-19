@@ -2,14 +2,14 @@ class ExpensesController < ApplicationController
 
   before_filter :sanitize_expense_params
   before_action :set_expenses, on: :index
+  before_action :set_expense, except: [:index, :new]
 
   def index
-    @expenses ||= Expense.last(50).sort_by(&:created_at).reverse
+    @expenses ||= Expense.last(10).sort_by(&:created_at).reverse
   end
 
   def create
     @expense = Expense.create(expense_params)
-    # render json: @expense, status: :created
     redirect_to action: "index"
   end
 
@@ -18,14 +18,16 @@ class ExpensesController < ApplicationController
   end
 
   def show
-    @expense = Expense.find(params[:id])
+    @expense
   end
 
-  def delete
+  def destroy
+    @expense.destroy!
+    redirect_to action: "index"
   end
 
   def edit
-    @expense = Expense.find(params[:id])
+    @expense
   end
 
   def update
@@ -49,6 +51,10 @@ class ExpensesController < ApplicationController
     params[:month] = params[:month].to_i
     params[:currency_id] = params[:currency_id].to_i
     params[:category_id] = params[:category_id].to_i
+  end
+
+  def set_expense
+    @expense = Expense.find(params[:id])
   end
 
   def set_expenses

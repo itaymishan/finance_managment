@@ -1,0 +1,49 @@
+<h1>Expenses#update</h1>
+<p>Find me in app/views/incomes/update.html.erb</p>
+
+<h1>Edit income</h1>
+
+<%= form_for(@income) do |f| %>
+
+  <% if @income.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@income.errors.count, "error") %> prohibited
+        this income from being saved:
+      </h2>
+      <ul>
+        <% @income.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.label :year %>
+  <%= f.text_field :year, value: DateTime.now.year %>
+  <br>
+  <%= f.label :month %>
+  <%= f.text_field :month, value: DateTime.now.month %>
+  <br>
+  <%= f.label :income_source_id %>
+  <%  income_array = IncomeSource.active.map { |src| [src.name, src.id] } %>
+  <%= f.select :income_source_id, income_array %>
+  <br>
+  <%= f.label :amount %>
+  <%= f.text_field :amount %>
+  <br>
+  <%= f.label :currency_id %>
+  <%  curr_array = Currency.all.map { |cur| [cur.name, cur.id] } %>
+  <%= f.select :currency_id, curr_array.sort %>
+  <br>
+  <%= f.label :comments %>
+  <%= f.text_field :comments %>
+  <br>
+
+  <p>
+    <%= f.submit %>
+  </p>
+
+<% end %>
+
+<%= link_to 'Back', incomes_path %>
