@@ -1,8 +1,7 @@
 class IncomesController < ApplicationController
 
-  before_filter :sanitize_page_params
+  before_filter :sanitize_income_params
   before_action :set_incomes, on: :index
-  # before_action :set_income, on: [:destroy, :update]
 
   def show
     @income = Income.find(params[:id])
@@ -44,7 +43,7 @@ class IncomesController < ApplicationController
     params.require(:income).permit(:income_source_id, :amount, :comments, :year, :month, :currency_id)
   end
 
-  def sanitize_page_params
+  def sanitize_income_params
     params[:income_source_id] = params[:income_source_id].to_i
     params[:amount] = params[:amount].to_i
     params[:year] = params[:year].to_i

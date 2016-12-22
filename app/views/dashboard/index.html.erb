@@ -1,7 +1,23 @@
 <h1>Dashboard</h1>
-<p>Find me in app/views/dashboard/dashboard.html.erb</p>
 
-<h2>Bucket: <%= WorkExpenseIn.all.map{|w| w.amount.to_d}.sum -  WorkExpenseOut.all.map{|w| w.amount.to_d}.sum %>$</h2>
+<div class="filter_options_container">
+  <form class="filter_form">
+    <% year = DateTime.now.year %>
+    <% month = DateTime.now.year %>
+    <%= label_tag(:from, "from:") %>
+    <%= select("filter", "from_year", [2013, 2014, 2015, 2016], selected: year) %>
+    <%= select("filter", "from_month", [1,2,3,4,5,6,7,8,9,10,11,12], selected: month) %>
+    <%= label_tag(:to, "to:") %>
+    <%= select("filter", "to_year", [2013, 2014, 2015, 2016], selected: year) %>
+    <%= select("filter", "to_month", [1,2,3,4,5,6,7,8,9,10,11,12], selected: month) %>
+    <input type="submit" value="Filter" />
+  </form>
+</div>
+
+<h3> Income in period: <%= @incomes.count %> </h3>
+<h3> Expenses in period: <%= @expenses.count %> </h3>
+
+<h3>Bucket: <%= WorkExpenseIn.all.map{|w| w.amount.to_d}.sum -  WorkExpenseOut.all.map{|w| w.amount.to_d}.sum %>$</h3>
 
 <%= pie_chart Income.joins(:income_source).group('income_sources.name').sum(:amount) %>
 

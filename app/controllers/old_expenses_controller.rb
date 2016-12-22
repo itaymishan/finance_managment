@@ -4,7 +4,6 @@ class OldExpensesController < ApplicationController
 
   def create
     @old_expense = OldExpense.create(old_expense_params)
-    # render json: @old_expense, status: :created
     redirect_to :index
   end
 

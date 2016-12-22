@@ -28,6 +28,10 @@ class Expense < ActiveRecord::Base
     personal: 'personal'
   }
 
+  scope :between_dates, -> (start_year, start_month, end_year, end_month) {
+    where(year: start_year..end_year).where(month: start_month..end_month)
+  }
+
   scope :group_by_currency, -> {
     joins(:currency).group('currencies.name').sum(:amount)
   }

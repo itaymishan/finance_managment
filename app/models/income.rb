@@ -18,6 +18,10 @@ class Income < ActiveRecord::Base
   belongs_to :income_source
   belongs_to :currency
 
+  scope :between_dates, -> (start_year, start_month, end_year, end_month) {
+    where(year: start_year..end_year).where(month: start_month..end_month)
+  }
+
   scope :income_groups, -> {
     Income.joins(:currency)
     .group('currencies.name')

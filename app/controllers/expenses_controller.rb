@@ -2,7 +2,6 @@ class ExpensesController < ApplicationController
 
   before_filter :sanitize_expense_params
   before_action :set_expenses, on: :index
-  # before_action :set_expense, on: [:destroy, :edit, :update]
 
   def index
     @expenses ||= Expense.last(10).sort_by(&:created_at).reverse
