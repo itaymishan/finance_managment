@@ -2,14 +2,12 @@
 
 <div class="filter_options_container">
   <form class="filter_form">
-    <% year = DateTime.now.year %>
-    <% month = DateTime.now.year %>
     <%= label_tag(:from, "from:") %>
-    <%= select("filter", "from_year", [2013, 2014, 2015, 2016], selected: year) %>
-    <%= select("filter", "from_month", [1,2,3,4,5,6,7,8,9,10,11,12], selected: month) %>
+    <%= select("filter", "from_year", [2013, 2014, 2015, 2016]) %>
+    <%= select("filter", "from_month", [1,2,3,4,5,6,7,8,9,10,11,12]) %>
     <%= label_tag(:to, "to:") %>
-    <%= select("filter", "to_year", [2013, 2014, 2015, 2016], selected: year) %>
-    <%= select("filter", "to_month", [1,2,3,4,5,6,7,8,9,10,11,12], selected: month) %>
+    <%= select("filter", "to_year", [2013, 2014, 2015, 2016]) %>
+    <%= select("filter", "to_month", [1,2,3,4,5,6,7,8,9,10,11,12]) %>
     <input type="submit" value="Filter" />
   </form>
 </div>
