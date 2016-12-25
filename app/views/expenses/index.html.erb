@@ -1,7 +1,16 @@
 <h1>Expenses#index</h1>
 <p>Find me in app/views/expenses/index.html.erb</p>
 
-<h3>summary</h3>
+<div class="filter_options_container">
+  <form class="filter_form">
+    <%= select("filter", "year", 2013..2017) %>
+    <%= select("filter", "month", 1..12) %>
+    <input type="submit" value="Filter" />
+  </form>
+</div>
+
+<h3>summary (<%= @expenses.last.month %>/<%= @expenses.last.year %>) </h3>
+<h4></h4>
 <table>
   <tr>Expenses(ILS): <%= ils_sum = @expenses.select{|e| e.currency.name == 'ILS'}.map{|e| e.amount}.sum %></tr>
   <br>

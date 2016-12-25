@@ -3,11 +3,11 @@
 <div class="filter_options_container">
   <form class="filter_form">
     <%= label_tag(:from, "from:") %>
-    <%= select("filter", "from_year", [2013, 2014, 2015, 2016]) %>
-    <%= select("filter", "from_month", [1,2,3,4,5,6,7,8,9,10,11,12]) %>
+    <%= select("filter", "from_year", 2013..2017) %>
+    <%= select("filter", "from_month", 1..12) %>
     <%= label_tag(:to, "to:") %>
-    <%= select("filter", "to_year", [2013, 2014, 2015, 2016]) %>
-    <%= select("filter", "to_month", [1,2,3,4,5,6,7,8,9,10,11,12]) %>
+    <%= select("filter", "to_year", 2013..2017) %>
+    <%= select("filter", "to_month", 1..12) %>
     <input type="submit" value="Filter" />
   </form>
 </div>
@@ -17,7 +17,7 @@
 
 <h3>Bucket: <%= WorkExpenseIn.all.map{|w| w.amount.to_d}.sum -  WorkExpenseOut.all.map{|w| w.amount.to_d}.sum %>$</h3>
 
-<%= pie_chart Income.joins(:income_source).group('income_sources.name').sum(:amount) %>
-
 <%= line_chart IncomeSource.all.map { |src|
-   { name: src.name, data: src.incomes.group([:year, :month]).order('year, month ASC').sum(:amount)}} %>
+   { name: src.name, data: src.incomes.group([:year, :month]).order('year, month ASC').sum(:amount)}}, xtitle: "Time", ytitle: "Amount" %>
+
+<%= line_chart Income.group(:date, :currency_id).sum(:amount) %>

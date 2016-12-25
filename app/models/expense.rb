@@ -36,4 +36,7 @@ class Expense < ActiveRecord::Base
     joins(:currency).group('currencies.name').sum(:amount)
   }
 
+  before_create do
+    self.expense_date = Date.new(self.year, self.month, 1)
+  end
 end
