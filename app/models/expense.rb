@@ -37,6 +37,6 @@ class Expense < ActiveRecord::Base
   }
 
   before_create do
-    self.expense_date = Date.new(self.year, self.month, 1)
+    self.date = Date.new(self.year, self.month, 1)
   end
 end

@@ -1,4 +1,5 @@
 <h1>Dashboard</h1>
+<%= select("filter", "currency", ['CAD', 'ILS', 'USD']) %>
 
 <div class="filter_options_container">
   <form class="filter_form">
@@ -17,7 +18,4 @@
 
 <h3>Bucket: <%= WorkExpenseIn.all.map{|w| w.amount.to_d}.sum -  WorkExpenseOut.all.map{|w| w.amount.to_d}.sum %>$</h3>
 
-<%= line_chart IncomeSource.all.map { |src|
-   { name: src.name, data: src.incomes.group([:year, :month]).order('year, month ASC').sum(:amount)}}, xtitle: "Time", ytitle: "Amount" %>
-
-<%= line_chart Income.group(:date, :currency_id).sum(:amount) %>
+<%= pie_chart @expenses.group_by{|i| i.category.hebrew_name}.map{|k,v| [k, v.map{|item| item.currency.convert_to('CAD', item.amount) }.sum.to_i]}, donut: true %>
