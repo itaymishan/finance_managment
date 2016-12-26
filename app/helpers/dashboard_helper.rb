@@ -61,11 +61,11 @@ module DashboardHelper
     input = []
     expenses = {
       name: 'Expense',
-      data: @expenses.group_by{|item| item.date }.map{|k,v| [k, v.map{|item| item.currency.convert_to('CAD', item.amount) }.sum.to_i]}
+      data: @expenses.group_by{|item| item.date }.map{|k,v| [k, v.map{|item| item.currency.convert_to(params[:filter][:currency], item.amount) }.sum.to_i]}
     }
     incomes = {
       name: 'Income',
-      data: @incomes.group_by{|item| item.date }.map{|k,v| [k, v.map{|item| item.currency.convert_to('CAD', item.amount) }.sum.to_i]}
+      data: @incomes.group_by{|item| item.date }.map{|k,v| [k, v.map{|item| item.currency.convert_to(params[:filter][:currency], item.amount) }.sum.to_i]}
     }
     input.push(expenses)
     input.push(incomes)
