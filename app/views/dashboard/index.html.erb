@@ -17,10 +17,32 @@
 
 <h2>Data: (<%= @expenses.map(&:date).min.strftime("%d/%m/%Y")  %> - <%= @expenses.map(&:date).max.strftime("%d/%m/%Y") %>)</h2>
 
-<% if params[:filter].present? %>
-  <%= pie_chart @expenses.group_by{|i| i.category.hebrew_name}.map{|k,v| [k, v.map{|item| item.currency.convert_to(params[:filter][:currency], item.amount) }.sum.to_i]}, donut: true, legend: false, width: "200px", height: "200px" %>
-<% end %>
+<table>
+  <tr>
+    <td>
+      <% if params[:filter].present? %>
+        <%= pie_chart @expenses.group_by{|i| i.category.hebrew_name}.map{|k,v| [k, v.map{|item| item.currency.convert_to(params[:filter][:currency], item.amount) }.sum.to_i]}, donut: true, legend: false, width: "200px", height: "200px" %>
+      <% end %>
+    </td>
+    <td>
+    <% if params[:filter].present? %>
+      <%= expenses_by_category %>
+    <% end %>
+    </td>
+    <td>
+      <% if params[:filter].present? %>
 
-<% if params[:filter].present? %>
-  <%= column_chart @expenses.group_by{|i| i.category.hebrew_name}.map{|k,v| [k, v.map{|item| item.currency.convert_to(params[:filter][:currency], item.amount) }.sum.to_i]}, width: "3000px", height: "400px", min: 100, max: 600000 %>
-<% end %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <% if params[:filter].present? %>
+      <%= expenses_by_category_line %>
+    <% end %>
+  </tr>
+  <tr>
+    <% if params[:filter].present? %>
+      <%= incomes_expenses_line %>
+    <% end %>
+  </tr>
+</table>
