@@ -13,10 +13,10 @@ class Currency < ActiveRecord::Base
   has_many :expenses
   has_many :incomes
 
-  def convert_to(currency, amount)
+  def convert_to(currency, amount)    
     return amount if self.name == currency
     @rates ||= ExchangeRate.all
-    @rates.find_by(from: self.name, to: currency).rate * amount
+    @rates.find_by!(from: self.name, to: currency).rate * amount
   end
 
 end

@@ -14,3 +14,7 @@ end
 ExchangeRate.find_or_create_by(from: 'ILS', to: 'CAD') do |ex|
   ex.rate = 0.3
 end
+
+ExchangeRate.find_or_create_by(from: 'USD', to: 'ILS') do |ex|
+  ex.rate = 3.6
+end
