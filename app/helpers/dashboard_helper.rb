@@ -69,7 +69,7 @@ module DashboardHelper
     }
     input.push(incomes)
     input.push(expenses)
-    line_chart(input, min: 0, max: 50000)
+    line_chart(input, min: 0, max: 100000)
   end
 
 
