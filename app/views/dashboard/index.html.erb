@@ -24,25 +24,15 @@
         <%= pie_chart @expenses.group_by{|i| i.category.hebrew_name}.map{|k,v| [k, v.map{|item| item.currency.convert_to(params[:filter][:currency], item.amount) }.sum.to_i]}, donut: true, legend: false, width: "200px", height: "200px" %>
       <% end %>
     </td>
-    <td>
-    <% if params[:filter].present? %>
-      <%= expenses_by_category %>
-    <% end %>
-    </td>
-    <td>
-      <% if params[:filter].present? %>
-
-      <% end %>
-    </td>
-  </tr>
-  <tr>
-    <% if params[:filter].present? %>
-      <%=  %>
-    <% end %>
   </tr>
   <tr>
     <% if params[:filter].present? %>
       <%= incomes_expenses_line %>
+    <% end %>
+  </tr>
+  <tr>
+    <% if params[:filter].present? %>
+      <%= expenses_by_category %>
     <% end %>
   </tr>
 </table>
