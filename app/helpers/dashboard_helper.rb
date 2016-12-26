@@ -67,8 +67,8 @@ module DashboardHelper
       name: 'Income',
       data: @incomes.group_by{|item| item.date }.map{|k,v| [k, v.map{|item| item.currency.convert_to(params[:filter][:currency], item.amount) }.sum.to_i]}
     }
-    input.push(expenses)
     input.push(incomes)
+    input.push(expenses)
     line_chart(input, min: 0, max: 50000)
   end
 
