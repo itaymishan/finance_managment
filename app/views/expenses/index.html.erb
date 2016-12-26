@@ -3,8 +3,8 @@
 
 <div class="filter_options_container">
   <form class="filter_form">
-    <%= select("filter", "year", 2013..2017) %>
-    <%= select("filter", "month", 1..12) %>
+    <%= select("filter", "year", 2013..2017, selected: @expenses.map(&:year).min) %>
+    <%= select("filter", "month", 1..12, selected: @expenses.map(&:month).min) %>
     <input type="submit" value="Filter" />
   </form>
 </div>
