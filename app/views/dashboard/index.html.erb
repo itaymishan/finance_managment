@@ -4,11 +4,11 @@
 <div class="filter_options_container">
   <form class="filter_form">
     <%= label_tag(:from, "from:") %>
-    <%= select("filter", "from_year", 2013..2017) %>
-    <%= select("filter", "from_month", 1..12) %>
+    <%= select("filter", "from_year", 2013..2017, selected: @expenses.map(&:year).min) %>
+    <%= select("filter", "from_month", 1..12, selected: @expenses.map(&:month).min) %>
     <%= label_tag(:to, "to:") %>
-    <%= select("filter", "to_year", 2013..2017) %>
-    <%= select("filter", "to_month", 1..12) %>
+    <%= select("filter", "to_year", 2013..2017, selected: @expenses.map(&:year).max) %>
+    <%= select("filter", "to_month", 1..12, selected: @expenses.map(&:month).max) %>
     <input type="submit" value="Filter" />
   </form>
 </div>
