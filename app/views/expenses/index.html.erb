@@ -1,26 +1,53 @@
-<h1>Expenses#index</h1>
+
+<h1> By Month(<%= @expenses.last.month %>/<%= @expenses.last.year %>) </h1>
+<h2>Insert New Expense</h2>
+<%= form_for Expense.new, url: {action: "create"} do |f| %>
+  <%= f.label :year %>
+  <%= f.text_field :year, value: DateTime.now.year, size: 5 %>
+  <%= f.label :month %>
+  <%= f.text_field :month, value: DateTime.now.month, size: 3 %>
+  <%= f.label :category_id %>
+  <%  expense_array = Category.active.map { |src| [src.hebrew_name, src.id] } %>
+  <%= f.select :category_id, expense_array %>
+  <%= f.label :user_id %>
+  <%  users_array = User.all.map { |src| [src.first_name, src.id] } %>
+  <%= f.select :user_id, users_array %>
+  <%= f.label :expense_type %>
+  <%= f.select :expense_type, Expense::expense_types %>
+  <%= f.label :currency_id %>
+  <%  curr_array = Currency.all.map { |cur| [cur.name, cur.id] } %>
+  <%= f.select :currency_id, curr_array.sort %>
+  <%= f.label :amount %>
+  <%= f.text_field :amount, size: 5  %>
+  <%= f.label :comments %>
+  <%= f.text_field :comments %>
+  <%= f.submit "Create" %>
+<% end %>
+
+<h2>Filter</h2>
 
 <div class="filter_options_container">
   <form class="filter_form">
-    <%= select("filter", "year", 2013..2017, selected: @expenses.map(&:year).min) %>
-    <%= select("filter", "month", 1..12, selected: @expenses.map(&:month).min) %>
+    <%= select("filter", "year", 2013..2017, selected: params[:filter].present? ? params[:filter][:year] : DateTime.now.year) %>
+    <%= select("filter", "month", 1..12, selected: params[:filter].present? ? params[:filter][:month] : DateTime.now.month) %>
+    <%= select("filter", "currency", ['CAD', 'ILS', 'USD'], selected: params[:filter].present? ? params[:filter][:currency] : 'CAD') %>
     <input type="submit" value="Filter" />
   </form>
 </div>
 
-<h3>summary (<%= @expenses.last.month %>/<%= @expenses.last.year %>) </h3>
-<h4></h4>
-<table>
-  <tr>Expenses(ILS): <%= ils_sum = @expenses.select{|e| e.currency.name == 'ILS'}.map{|e| e.amount}.sum %></tr>
-  <br>
-  <tr>Expenses(CAD): <%= cad_sum = @expenses.select{|e| e.currency.name == 'CAD'}.map{|e| e.amount}.sum %></tr>
-  <br>
-  <tr>Total Expenses(CAD):<%= cad_sum + currency_convert('ILS', 'CAD', ils_sum) %></tr>
-  <br>
-  <tr>Total Expenses(ILS):<%= cad_sum + currency_convert('CAD', 'ILS', cad_sum) %></tr>
-</table>
+<% if params[:filter].present? %>
+<% hash = {'CAD': 'C$', 'ILS': '₪', 'USD': '$'} %>
+<h2>Summary(<%= params[:filter][:currency] %>)</h2>
+  <table>
+    <% total_expenses = @expenses.map{|item| item.currency.convert_to(params[:filter][:currency], item.amount) }.sum.to_i%>
+    <tr><h3>Total Expenses: <%= number_to_currency(total_expenses, unit: '$', precision: 0) %></tr>
+    <% total_income = Income.where(year: params[:filter][:year], month: params[:filter][:month]).map{|item| item.currency.convert_to(params[:filter][:currency], item.amount) }.sum.to_i %>
+    <tr><h3>Total Income: <%= number_to_currency(total_income, unit: "$", precision: 0) %></tr>
+    <tr><h3 style='color:green';>Total Saved: <%= number_to_currency(total_income - total_expenses, unit: "$", precision: 0) %></tr>
+  </table>
+<% end %>
 
-<h1>Expenses</h1>
+<h2>Expenses</h2>
 <table>
   <tr>
     <th>year</th>
@@ -38,7 +65,7 @@
       <td><%= expense.month %></td>
       <td><%= expense.category.hebrew_name %></td>
       <td><%= expense.user.first_name %></td>
-      <td><%= expense.amount %></td>
+      <td><%= number_to_currency(expense.amount, precision: 0) %></td>
       <td><%= expense.currency.name %></td>
       <td><%= expense.comments %></td>
       <td><%= link_to 'Edit', edit_expense_path(expense) %></td>
