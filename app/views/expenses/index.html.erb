@@ -25,7 +25,8 @@
 <% end %>
 
 <h2>Filter</h2>
-
+<% hash = {'CAD': 'C$', ILS: '₪', USD: '$'} %>
+<% unit = hash[params[:filter][:currency].to_sym] %>
 <div class="filter_options_container">
   <form class="filter_form">
     <%= select("filter", "year", 2013..2017, selected: params[:filter].present? ? params[:filter][:year] : DateTime.now.year) %>
@@ -36,14 +37,13 @@
 </div>
 
 <% if params[:filter].present? %>
-<% hash = {'CAD': 'C$', 'ILS': '₪', 'USD': '$'} %>
 <h2>Summary(<%= params[:filter][:currency] %>)</h2>
   <table>
     <% total_expenses = @expenses.map{|item| item.currency.convert_to(params[:filter][:currency], item.amount) }.sum.to_i%>
-    <tr><h3>Total Expenses: <%= number_to_currency(total_expenses, unit: '$', precision: 0) %></tr>
+    <tr><h3>Total Expenses: <%= number_to_currency(total_expenses, unit: unit, precision: 0) %></tr>
     <% total_income = Income.where(year: params[:filter][:year], month: params[:filter][:month]).map{|item| item.currency.convert_to(params[:filter][:currency], item.amount) }.sum.to_i %>
-    <tr><h3>Total Income: <%= number_to_currency(total_income, unit: "$", precision: 0) %></tr>
-    <tr><h3 style='color:green';>Total Saved: <%= number_to_currency(total_income - total_expenses, unit: "$", precision: 0) %></tr>
+    <tr><h3>Total Income: <%= number_to_currency(total_income, unit: unit, precision: 0) %></tr>
+    <tr><h3 style='color:green';>Total Saved: <%= number_to_currency(total_income - total_expenses, unit: unit, precision: 0) %></tr>
   </table>
 <% end %>
 
@@ -55,7 +55,6 @@
     <th>category</th>
     <th>person</th>
     <th>amount</th>
-    <th>currency</th>
     <th>comments</th>
   </tr>
 
@@ -65,8 +64,7 @@
       <td><%= expense.month %></td>
       <td><%= expense.category.hebrew_name %></td>
       <td><%= expense.user.first_name %></td>
-      <td><%= number_to_currency(expense.amount, precision: 0) %></td>
-      <td><%= expense.currency.name %></td>
+      <td><%= number_to_currency(expense.amount, precision: 0, unit: hash[expense.currency.name.to_sym]) %></td>
       <td><%= expense.comments %></td>
       <td><%= link_to 'Edit', edit_expense_path(expense) %></td>
       <td><%= link_to 'Delete', expense_path(expense),
