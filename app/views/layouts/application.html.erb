@@ -7,6 +7,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+
   Do not use:
   <%= link_to 'old_incomes', controller: 'old_incomes' %>
   <%= link_to 'old_expenses', controller: 'old_expenses' %>
@@ -28,6 +29,7 @@
       </br>
       <%= link_to 'View Incomes', controller: 'incomes', method: :index %>
     </strong>
+
 <%= yield %>
 
 </body>
