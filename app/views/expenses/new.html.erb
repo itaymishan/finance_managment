@@ -1,6 +1,4 @@
-<h1>Expenses#new</h1>
-<p>Find me in app/views/expenses/new.html.erb</p>
-
+<h1>New Expense</h1>
 <%= form_for @expense, url: {action: "create"} do |f| %>
   <%= f.label :year %>
   <%= f.text_field :year, value: DateTime.now.year %>

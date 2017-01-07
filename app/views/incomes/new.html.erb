@@ -1,6 +1,4 @@
-<h1>Income#new</h1>
-<p>Find me in app/views/income/new.html.erb</p>
-
+<h1>New Income</h1>
 <%= form_for @income, url: {action: "create"} do |f| %>
   <%= f.label :year %>
   <%= f.text_field :year, value: DateTime.now.year %>
