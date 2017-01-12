@@ -1,42 +1,76 @@
-<h1>Expenses#index</h1>
-<p>Find me in app/views/expenses/index.html.erb</p>
-
-<h3>summary</h3>
-<table>
-  <tr>Expenses(ILS): <%= ils_sum = @expenses.select{|e| e.currency.name == 'ILS'}.map{|e| e.amount}.sum %></tr>
-  <br>
-  <tr>Expenses(CAD): <%= cad_sum = @expenses.select{|e| e.currency.name == 'CAD'}.map{|e| e.amount}.sum %></tr>
-  <br>
-  <tr>Total Expenses(CAD):<%= cad_sum + currency_convert('ILS', 'CAD', ils_sum) %></tr>
-  <br>
-  <tr>Total Expenses(ILS):<%= cad_sum + currency_convert('CAD', 'ILS', cad_sum) %></tr>
-</table>
-
-<h1>Expenses</h1>
-<table>
-  <tr>
-    <th>year</th>
-    <th>month</th>
-    <th>category</th>
-    <th>person</th>
-    <th>amount</th>
-    <th>currency</th>
-    <th>comments</th>
-  </tr>
-
-  <% @expenses.each do |expense| %>
-    <tr>
-      <td><%= expense.year %></td>
-      <td><%= expense.month %></td>
-      <td><%= expense.category.hebrew_name %></td>
-      <td><%= expense.user.first_name %></td>
-      <td><%= expense.amount %></td>
-      <td><%= expense.currency.name %></td>
-      <td><%= expense.comments %></td>
-      <td><%= link_to 'Edit', edit_expense_path(expense) %></td>
-      <td><%= link_to 'Delete', expense_path(expense),
-              method: :delete,
-              data: { confirm: 'Are you sure?' } %></td>
-    </tr>
+<div class='container'>
+  <h1> By Month(<%= @expenses.last.month %>/<%= @expenses.last.year %>) </h1>
+  <h2>Insert New Expense</h2>
+  <%= form_for Expense.new, url: {action: "create"} do |f| %>
+    <%= f.label :year %>
+    <%= f.text_field :year, value: DateTime.now.year, size: 5 %>
+    <%= f.label :month %>
+    <%= f.text_field :month, value: DateTime.now.month, size: 3 %>
+    <%= f.label :category_id %>
+    <%  expense_array = Category.active.map { |src| [src.hebrew_name, src.id] } %>
+    <%= f.select :category_id, expense_array %>
+    <%= f.label :user_id %>
+    <%  users_array = User.all.map { |src| [src.first_name, src.id] } %>
+    <%= f.select :user_id, users_array %>
+    <%= f.label :expense_type %>
+    <%= f.select :expense_type, Expense::expense_types %>
+    <%= f.label :currency_id %>
+    <%  curr_array = Currency.all.map { |cur| [cur.name, cur.id] } %>
+    <%= f.select :currency_id, curr_array.sort %>
+    <%= f.label :amount %>
+    <%= f.text_field :amount, size: 5  %>
+    <%= f.label :comments %>
+    <%= f.text_field :comments %>
+    <%= f.submit "Create" %>
   <% end %>
-</table>
+
+  <h2>Filter</h2>
+  <% hash = {'CAD': 'C$', ILS: '₪', USD: '$'} %>
+  <% unit = hash[params[:filter][:currency].to_sym] if params[:filter].present? %>
+  <div class="filter_options_container">
+    <form class="filter_form">
+      <%= select("filter", "year", 2013..2017, selected: params[:filter].present? ? params[:filter][:year] : DateTime.now.year) %>
+      <%= select("filter", "month", 1..12, selected: params[:filter].present? ? params[:filter][:month] : DateTime.now.month) %>
+      <%= select("filter", "currency", ['CAD', 'ILS', 'USD'], selected: params[:filter].present? ? params[:filter][:currency] : 'CAD') %>
+      <input type="submit" value="Filter" />
+    </form>
+  </div>
+
+  <% if params[:filter].present? %>
+  <h2>Summary(<%= params[:filter][:currency] %>)</h2>
+    <table class="table">
+      <% total_expenses = @expenses.map{|item| item.currency.convert_to(params[:filter][:currency], item.amount) }.sum.to_i%>
+      <tr><h3>Total Expenses: <%= number_to_currency(total_expenses, unit: unit, precision: 0) %></tr>
+      <% total_income = Income.where(year: params[:filter][:year], month: params[:filter][:month]).map{|item| item.currency.convert_to(params[:filter][:currency], item.amount) }.sum.to_i %>
+      <tr><h3>Total Income: <%= number_to_currency(total_income, unit: unit, precision: 0) %></tr>
+      <tr><h3 style='color:green';>Total Saved: <%= number_to_currency(total_income - total_expenses, unit: unit, precision: 0) %></tr>
+    </table>
+  <% end %>
+
+  <h2>Expenses</h2>
+  <table class="table table-hover">
+    <tr>
+      <th>year</th>
+      <th>month</th>
+      <th>category</th>
+      <th>person</th>
+      <th>amount</th>
+      <th>comments</th>
+    </tr>
+
+    <% @expenses.each do |expense| %>
+      <tr>
+        <td><%= expense.year %></td>
+        <td><%= expense.month %></td>
+        <td><%= expense.category.hebrew_name %></td>
+        <td><%= expense.user.first_name %></td>
+        <td><%= number_to_currency(expense.amount, precision: 0, unit: hash[expense.currency.name.to_sym]) %></td>
+        <td><%= expense.comments %></td>
+        <td><%= link_to 'Edit', edit_expense_path(expense) %></td>
+        <td><%= link_to 'Delete', expense_path(expense),
+                method: :delete,
+                data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

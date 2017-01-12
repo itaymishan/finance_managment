@@ -23,6 +23,9 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'autoprefixer-rails'
+
 gem 'annotate'
 gem 'awesome_print'
 gem 'chartkick'
@@ -30,6 +33,7 @@ gem 'chartkick'
 # gem 'activeadmin', '~> 1.0.0.pre4'
 gem 'money'
 gem 'dotenv-rails', :groups => [:development, :test]
+gem 'groupdate'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
