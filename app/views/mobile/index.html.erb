@@ -1,0 +1,52 @@
+<div class="container-fluid">
+  <h2>Income</h2>
+  <div class="row">
+    <div class="col-sm-1">
+      <button class="btn btn-default">
+        <img src="http://www.itsmf.ca/images/fck/Image/NSP/IBM-cmyk_small(1).png", width="50", hight="50" />
+      </button>
+    </div>
+    <div class="col-sm-1">
+      <button class="btn btn-default">
+        <img src="https://www.platterz.ca/images/PlatterzLogo.36034897.png", width="50", hight="50" />
+      </button>
+    </div>
+    <div class="col-sm-1">
+      <button class="btn btn-default">
+        <img src="https://a2.muscache.com/airbnb/static/about/resources/airbnb-logo-293-5b1924f36d180a53fdca602da3e5bc6c.png", width="50", hight="50" />
+      </button>
+    </div>
+  </div>
+  <h2>Expense</h2>
+  <div class="row">
+    <% ['aaa', 'bbb'].each do |item| %>
+    <div class="col-sm-1">
+      <form action="/mobile" method="post">
+        <div class="form-group">
+          <input type="hidden" class="form-control" id="amount" name="amount">
+          <input type="hidden" class="form-control" id="comments" name="comments">
+          <input type="hidden" class="form-control" id="category" name="category">
+          <button type="submit" class="btn btn-primary" onclick="PopUpAmountComments(this)"><%= item %></button>
+        </div>
+      </form>
+    </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+    function PopUpAmountComments(sender) {
+    var amount = prompt("Please enter amount:");
+    var comments = prompt("Please enter comments:");
+    if (amount != null) {
+        document.getElementById("amount").value = amount;
+    }
+    if (comments != null) {
+        document.getElementById("comments").value = comments;
+    }
+    if (comments != null) {
+        document.getElementById("category").value = sender.innerHTML;
+    }
+}
+</script>
+

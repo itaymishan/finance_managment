@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   resources :old_expenses
   resources :expenses
   resources :incomes
+  resources :mobile
+
 
   resources :dashboard
 
