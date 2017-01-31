@@ -45,6 +45,14 @@
       <tr><h3>Total Income: <%= number_to_currency(total_income, unit: unit, precision: 0) %></tr>
       <tr><h3 style='color:green';>Total Saved: <%= number_to_currency(total_income - total_expenses, unit: unit, precision: 0) %></tr>
     </table>
+    <table class="table">
+      <% expenses_by_category.each |category, amount|%>
+      <tr>
+        <td><%= category %></td>
+        <td><%= number_to_currency(amount, unit: unit, precision: 0) %></td>
+      </tr>
+
+    </table>
   <% end %>
 
   <h2>Expenses</h2>
