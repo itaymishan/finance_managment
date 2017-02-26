@@ -3,9 +3,9 @@
   <h2>Insert New Expense</h2>
   <%= form_for Expense.new, url: {action: "create"} do |f| %>
     <%= f.label :year %>
-    <%= f.text_field :year, value: DateTime.now.year, size: 5 %>
+    <%= f.text_field :year, value: DateTime.now.year, size: 2 %>
     <%= f.label :month %>
-    <%= f.text_field :month, value: DateTime.now.month, size: 3 %>
+    <%= f.text_field :month, value: DateTime.now.month, size: 1 %>
     <%= f.label :category_id %>
     <%  expense_array = Category.active.map { |src| [src.hebrew_name, src.id] } %>
     <%= f.select :category_id, expense_array %>
@@ -18,10 +18,10 @@
     <%  curr_array = Currency.all.map { |cur| [cur.name, cur.id] } %>
     <%= f.select :currency_id, curr_array.sort %>
     <%= f.label :amount %>
-    <%= f.text_field :amount, size: 5  %>
+    <%= f.text_field :amount, size: 1  %>
     <%= f.label :comments %>
-    <%= f.text_field :comments %>
-    <%= f.submit "Create" %>
+    <%= f.text_field :comments, size: 4 %>
+    <%= f.submit "OK" %>
   <% end %>
 
   <h2>Filter</h2>
@@ -44,6 +44,27 @@
       <% total_income = Income.where(year: params[:filter][:year], month: params[:filter][:month]).map{|item| item.currency.convert_to(params[:filter][:currency], item.amount) }.sum.to_i %>
       <tr><h3>Total Income: <%= number_to_currency(total_income, unit: unit, precision: 0) %></tr>
       <tr><h3 style='color:green';>Total Saved: <%= number_to_currency(total_income - total_expenses, unit: unit, precision: 0) %></tr>
+    </table>
+  <% end %>
+
+ 
+
+  <% if params[:filter].present? %>
+    <% category_groups = @expenses.group_by{|e| [e.category.hebrew_name, e.currency.name]}.map{|k, v| { category: k[0], currency: k[1], amount: v.map(&:amount).sum } }.sort_by{|item| -item[:amount]} %>
+    <h2>By Category</h2>
+    <table class="table table-hover">
+      <tr>
+        <th> Categotry </th>
+        <th> Amount </th>
+        <th> Currency </th>
+      </tr>
+      <% category_groups.each do |item| %>
+        <tr>
+          <td><%= item[:category] %></td>
+          <td><%= number_to_currency(item[:amount], precision: 0) %></td>
+          <td><%= item[:currency] %></td>
+        </tr>
+      <% end %>
     </table>
   <% end %>
 
