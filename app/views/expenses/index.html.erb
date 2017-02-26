@@ -25,7 +25,7 @@
   <% end %>
 
   <h2>Filter</h2>
-  <% hash = {'CAD': 'C$', ILS: '₪', USD: '$'} %>
+  <% hash = {:CAD => 'C$', :ILS => '₪', :USD => '$'} %>
   <% unit = hash[params[:filter][:currency].to_sym] if params[:filter].present? %>
   <div class="filter_options_container">
     <form class="filter_form">
