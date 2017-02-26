@@ -61,7 +61,7 @@
       <% category_groups.each do |item| %>
         <tr>
           <td><%= item[:category] %></td>
-          <td><%= number_to_currency(item[:amount], precision: 0) %></td>
+          <td><%= item[:amount] %></td>
           <td><%= item[:currency] %></td>
         </tr>
       <% end %>
