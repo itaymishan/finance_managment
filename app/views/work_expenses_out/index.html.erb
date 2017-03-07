@@ -16,8 +16,9 @@
 
 
 <h1>Listing WorkExpenseOut</h1>
-<table>
+<table class="table table-hover">
   <tr>
+    <th>Insert Date</th>
     <th>amount</th>
     <th>currency</th>
     <th>comments</th>
@@ -25,6 +26,7 @@
 
   <% @old_expenses.each do |expense| %>
     <tr>
+      <td><%= expense.created_at.strftime("%d/%m/%Y") %></td>
       <td><%= expense.amount %></td>
       <td><%= expense.currency %></td>
       <td><%= expense.comments %></td>
