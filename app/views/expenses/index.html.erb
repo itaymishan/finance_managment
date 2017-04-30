@@ -1,4 +1,5 @@
 <div class='container'>
+<% if @expenses.present?%>
   <h1> By Month(<%= @expenses.last.month %>/<%= @expenses.last.year %>) </h1>
   <h2>Insert New Expense</h2>
   <%= form_for Expense.new, url: {action: "create"} do |f| %>
@@ -23,15 +24,17 @@
     <%= f.text_field :comments, size: 4 %>
     <%= f.submit "OK" %>
   <% end %>
+<%end%>
 
   <h2>Filter</h2>
   <% hash = {:CAD => 'C$', :ILS => '₪', :USD => '$'} %>
   <% unit = hash[params[:filter][:currency].to_sym] if params[:filter].present? %>
   <div class="filter_options_container">
     <form class="filter_form">
-      <%= select("filter", "year", 2013..2017, selected: params[:filter].present? ? params[:filter][:year] : DateTime.now.year) %>
-      <%= select("filter", "month", 1..12, selected: params[:filter].present? ? params[:filter][:month] : DateTime.now.month) %>
+      <%= select("filter", "year", (2013..2017).to_a.unshift(""), selected: params[:filter].present? ? params[:filter][:year] : DateTime.now.year) %>
+      <%= select("filter", "month", (1..12).to_a.unshift(""), selected: params[:filter].present? ? params[:filter][:month] : DateTime.now.month) %>
       <%= select("filter", "currency", ['CAD', 'ILS', 'USD'], selected: params[:filter].present? ? params[:filter][:currency] : 'CAD') %>
+      <%= select("filter", "category", Category.pluck(:hebrew_name).unshift(""), selected: params[:filter].present? ? params[:filter][:category] : "") %>
       <input type="submit" value="Filter" />
     </form>
   </div>
@@ -49,7 +52,7 @@
 
  
 
-  <% if params[:filter].present? %>
+  <% if params[:filter].present? && @expenses.present?  %>
     <% category_groups = @expenses.group_by{|e| [e.category.hebrew_name, e.currency.name]}.map{|k, v| { category: k[0], currency: k[1], amount: v.map(&:amount).sum } }.sort_by{|item| -item[:amount]} %>
     <h2>By Category</h2>
     <table class="table table-hover">

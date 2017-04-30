@@ -60,7 +60,9 @@ class ExpensesController < ApplicationController
 
   def set_expenses
     if params[:filter].present?
-      @expenses = Expense.where(year: params[:filter][:year], month: params[:filter][:month]).order(id: :desc)
+      @expenses = Expense.where(year: params[:filter][:year]) if params[:filter][:year].present?
+      @expenses = @expenses.where(month: params[:filter][:month]) if params[:filter][:month].present?
+      @expenses = @expenses.joins(:category).where(categories: { hebrew_name: params[:filter][:category] }) if params[:filter][:category].present?
     end
   end
 end
