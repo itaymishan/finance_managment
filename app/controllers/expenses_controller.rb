@@ -4,7 +4,7 @@ class ExpensesController < ApplicationController
   before_action :set_expenses, on: :index
 
   def index
-    @expenses ||= Expense.last(10).sort_by(&:created_at).reverse
+    @expenses.sort_by(&:created_at) if @expenses.present?
   end
 
   def create
