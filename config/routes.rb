@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   resources :incomes
   resources :mobile
 
-
   resources :dashboard
 
   resources :work_expenses_in

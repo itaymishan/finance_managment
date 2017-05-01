@@ -30,3 +30,7 @@ end
 ExchangeRate.find_or_create_by(from: 'USD', to: 'CAD') do |ex|
   ex.rate = 1.35
 end
+
+Category.find_or_create_by(hebrew_name: 'Osprey') do |c|
+  c.english_name = 'Osprey'
+end

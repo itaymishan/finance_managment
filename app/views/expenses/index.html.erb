@@ -34,7 +34,7 @@
       <%= select("filter", "year", (2013..2017).to_a.unshift(""), selected: params[:filter].present? ? params[:filter][:year] : DateTime.now.year) %>
       <%= select("filter", "month", (1..12).to_a.unshift(""), selected: params[:filter].present? ? params[:filter][:month] : DateTime.now.month) %>
       <%= select("filter", "currency", ['CAD', 'ILS', 'USD'], selected: params[:filter].present? ? params[:filter][:currency] : 'CAD') %>
-      <%= select("filter", "category", Category.pluck(:hebrew_name).unshift(""), selected: params[:filter].present? ? params[:filter][:category] : "") %>
+      <%= select("filter", "category", Category.active.pluck(:hebrew_name).unshift(""), selected: params[:filter].present? ? params[:filter][:category] : "") %>
       <input type="submit" value="Filter" />
     </form>
   </div>
