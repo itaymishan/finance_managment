@@ -10,13 +10,12 @@ class IncomesController < ApplicationController
   def create
     @income = Income.new(income_params)
     if @income.save!
-      redirect_to action: "index"
+      redirect_to action: "new"
     end
   end
 
   def index
-    @incomes ||= Income.last(10).sort_by(&:created_at).reverse
-    @summary ||= @incomes.joins(:currency).group('currencies.name').sum(:amount)
+    @summary ||= @incomes.joins(:currency).group('currencies.name').sum(:amount) if @incomes.present?
   end
 
   def new

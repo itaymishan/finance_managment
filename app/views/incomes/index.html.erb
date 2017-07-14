@@ -2,40 +2,42 @@
 
 <div class="filter_options_container">
   <form class="filter_form">
-    <%= select("filter", "year", ['',2013, 2014, 2015, 2016, 2017], selected: params[:filter][:year] || DateTime.now.year) %>
-    <%= select("filter", "month", ['',1,2,3,4,5,6,7,8,9,10,11,12], selected: params[:filter][:month] || DateTime.now.month) %>
-    <%= select("filter", "income_source", IncomeSource.pluck(:name).push(''), selected: params[:filter][:income_source]) %>
+    <%= select("filter", "year", ['',2013, 2014, 2015, 2016, 2017], selected: params[:filter].present? ? params[:filter][:year] : DateTime.now.year) %>
+    <%= select("filter", "month", ['',1,2,3,4,5,6,7,8,9,10,11,12], selected: params[:filter].present? ? params[:filter][:month] : DateTime.now.month) %>
+    <%= select("filter", "income_source", IncomeSource.pluck(:name).push(''), selected: params[:filter].present? ?params[:filter][:income_source] : '') %>
     <input type="submit" value="Filter" />
   </form>
 </div>
 
-<% @summary.each do |k,v| %>
-  <h3><%= k  %>: <%= number_to_currency(v, precision: 0)  %></h3>
-<% end %>
-
-<h1>Income</h1>
-<table class="table table-hover">
-  <tr>
-    <th>year</th>
-    <th>month</th>
-    <th>category</th>
-    <th>amount</th>
-    <th>currency</th>
-    <th>comments</th>
-  </tr>
-
-  <% @incomes.each do |income| %>
-    <tr>
-      <td><%= income.year %></td>
-      <td><%= income.month %></td>
-      <td><%= income.income_source.name %></td>
-      <td><%= income.amount %></td>
-      <td><%= income.currency.name %></td>
-      <td><%= income.comments %></td>
-      <td><%= link_to 'Edit', edit_income_path(income) %></td>
-      <td><%= link_to 'Delete', income_path(income),
-              method: :delete,
-              data: { confirm: 'Are you sure?' } %></td>
-    </tr>
+<% if @summary.present? && @incomes.present? %>
+  <% @summary.each do |k,v| %>
+    <h3><%= k  %>: <%= number_to_currency(v, precision: 0)  %></h3>
   <% end %>
-</table>
+
+  <h1>Income</h1>
+  <table class="table table-hover">
+    <tr>
+      <th>year</th>
+      <th>month</th>
+      <th>category</th>
+      <th>amount</th>
+      <th>currency</th>
+      <th>comments</th>
+    </tr>
+
+    <% @incomes.each do |income| %>
+      <tr>
+        <td><%= income.year %></td>
+        <td><%= income.month %></td>
+        <td><%= income.income_source.name %></td>
+        <td><%= income.amount %></td>
+        <td><%= income.currency.name %></td>
+        <td><%= income.comments %></td>
+        <td><%= link_to 'Edit', edit_income_path(income) %></td>
+        <td><%= link_to 'Delete', income_path(income),
+                method: :delete,
+                data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
