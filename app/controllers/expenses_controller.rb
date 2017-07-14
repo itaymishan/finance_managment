@@ -4,12 +4,12 @@ class ExpensesController < ApplicationController
   before_action :set_expenses, on: :index
 
   def index
-    @expenses.sort_by(&:created_at) if @expenses.present?
+    @expenses.sort_by(&:created_at).reverse if @expenses.present?
   end
 
   def create
     @expense = Expense.create(expense_params)
-    redirect_to action: "index"
+    redirect_to action: "new"
   end
 
   def new

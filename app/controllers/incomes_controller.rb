@@ -16,6 +16,7 @@ class IncomesController < ApplicationController
 
   def index
     @incomes ||= Income.last(10).sort_by(&:created_at).reverse
+    @summary ||= @incomes.joins(:currency).group('currencies.name').sum(:amount)
   end
 
   def new
@@ -44,7 +45,9 @@ class IncomesController < ApplicationController
   end
 
   def income_params
-    params.require(:income).permit(:income_source_id, :amount, :comments, :year, :month, :currency_id)
+    params.require(:income).permit(:income_source_id, 
+                                    :amount, :comments, :year, 
+                                    :month, :currency_id)
   end
 
   def sanitize_income_params
@@ -57,7 +60,10 @@ class IncomesController < ApplicationController
 
   def set_incomes
     if params[:filter].present?
-      @incomes = Income.where(year: params[:filter][:year], month: params[:filter][:month]).order(id: :desc)
+      @incomes = Income.all
+      @incomes = Income.where(year: params[:filter][:year]) if params[:filter][:year].present?
+      @incomes = @incomes.where(month: params[:filter][:month]) if params[:filter][:month].present?      
+      @incomes = @incomes.joins(:income_source).where(income_sources: { name: params[:filter][:income_source] }) if params[:filter][:income_source].present?
     end
   end
 
