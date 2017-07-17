@@ -15,6 +15,7 @@ class IncomesController < ApplicationController
   end
 
   def index
+    @incomes.order(:created_at) if @incomes.present?
     @summary ||= @incomes.joins(:currency).group('currencies.name').sum(:amount) if @incomes.present?
   end
 

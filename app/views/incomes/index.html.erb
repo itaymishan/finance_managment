@@ -1,5 +1,3 @@
-
-
 <div class="filter_options_container">
   <form class="filter_form">
     <%= select("filter", "year", ['',2013, 2014, 2015, 2016, 2017], selected: params[:filter].present? ? params[:filter][:year] : DateTime.now.year) %>
