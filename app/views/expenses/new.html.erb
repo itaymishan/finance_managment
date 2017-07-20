@@ -2,7 +2,6 @@
 <%= form_for @expense, url: {action: "create"} do |f| %>
   <%= f.label :year %>
   <%= f.text_field :year, value: DateTime.now.year %>
-
   <%= f.label :month %>
   <%= f.text_field :month, value: DateTime.now.month %>
   <br>
@@ -26,6 +25,8 @@
   <br>
   <%= f.label :comments %>
   <%= f.text_field :comments %>
+  <br>
+  <b>Repeat Times</b><input type="text" name="repeat_times" value="0">
   <br>
   <%= f.submit "Create" %>
 <% end %>

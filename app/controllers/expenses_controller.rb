@@ -8,7 +8,18 @@ class ExpensesController < ApplicationController
   end
 
   def create
-    @expense = Expense.create(expense_params)
+    if params[:repeat_times].present?
+      times = params[:repeat_times].to_i
+      i = 0
+      while i < times do
+        month = (expense_params[:month].to_i + i) % 12
+        year_add = (expense_params[:month].to_i + i) / 12
+        Expense.create(expense_params.merge({month: month, year: year_add+expense_params[:year].to_i}))
+        i += 1
+      end
+    else
+      @expense = Expense.create(expense_params)
+    end
     redirect_to action: "new"
   end
 
@@ -42,7 +53,9 @@ class ExpensesController < ApplicationController
   end
 
   def expense_params
-    params.require(:expense).permit(:category_id, :amount, :comments, :year, :month, :currency_id, :expense_type, :user_id)
+    params.require(:expense).permit(:category_id, :amount, :comments, 
+                                    :year, :month, :currency_id, 
+                                    :expense_type, :user_id)
   end
 
   def sanitize_expense_params

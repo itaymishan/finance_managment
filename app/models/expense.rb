@@ -35,8 +35,4 @@ class Expense < ActiveRecord::Base
   scope :group_by_currency, -> {
     joins(:currency).group('currencies.name').sum(:amount)
   }
-
-  before_create do
-    self.date = Date.new(self.year, self.month, 1)
-  end
 end
