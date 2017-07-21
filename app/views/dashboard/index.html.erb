@@ -15,6 +15,9 @@
             <td><%= expense.month %></td>
             <td><%= expense.category.hebrew_name %></td>
             <td><%= number_to_currency(expense.amount, precision: 0) %></td>
+              <td><%= link_to 'Delete', expense_path(expense),
+                method: :delete,
+                data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>
       </table>
@@ -37,6 +40,10 @@
             <td><%= income.income_source.name %></td>
             <td><%= income.amount %></td>
             <td><%= income.comments %></td>
+            <td><%= link_to 'Edit', edit_income_path(income) %></td>
+            <td><%= link_to 'Delete', income_path(income),
+                method: :delete,
+                data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>
       </table>
