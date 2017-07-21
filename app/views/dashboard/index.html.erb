@@ -1,4 +1,47 @@
-<h1>Dashboard</h1>
+<div class="row">
+  <div class="col-sm-6">
+    <label for="last_expenses">last 10 expenses</label>
+      <table class="table table-hover">
+        <tr>
+          <th>year</th>
+          <th>month</th>
+          <th>category</th>
+          <th>amount</th>
+        </tr>
+
+        <% @last_expenses.each do |expense| %>
+          <tr>
+            <td><%= expense.year %></td>
+            <td><%= expense.month %></td>
+            <td><%= expense.category.hebrew_name %></td>
+            <td><%= number_to_currency(expense.amount, precision: 0) %></td>
+          </tr>
+        <% end %>
+      </table>
+  </div>
+  <div class="col-sm-6">
+    <label for="last_incomes">last 10 incomes</label>
+      <table class="table table-hover">
+        <tr>
+          <th>year</th>
+          <th>month</th>
+          <th>category</th>
+          <th>amount</th>
+          <th>comments</th>
+        </tr>
+
+        <% @last_incomes.each do |income| %>
+          <tr>
+            <td><%= income.year %></td>
+            <td><%= income.month %></td>
+            <td><%= income.income_source.name %></td>
+            <td><%= income.amount %></td>
+            <td><%= income.comments %></td>
+          </tr>
+        <% end %>
+      </table>
+  </div>
+</div>
 
 <div class="filter_options_container">
   <form class="filter_form">
@@ -14,23 +57,3 @@
 </div>
 
 <h3>Bucket: <%= WorkExpenseIn.all.map{|w| w.amount.to_d}.sum -  WorkExpenseOut.all.map{|w| w.amount.to_d}.sum %>$</h3>
-
-<table>
-  <tr>
-    <td>
-      <% if params[:filter].present? %>
-        <%= pie_chart @expenses.group_by{|i| i.category.hebrew_name}.map{|k,v| [k, v.map{|item| item.currency.convert_to(params[:filter][:currency], item.amount) }.sum.to_i]}, donut: true, legend: false, width: "200px", height: "200px" %>
-      <% end %>
-    </td>
-  </tr>
-  <tr>
-    <% if params[:filter].present? %>
-      <%= incomes_expenses_line %>
-    <% end %>
-  </tr>
-  <tr>
-    <% if params[:filter].present? %>
-      <%= expenses_by_category %>
-    <% end %>
-  </tr>
-</table>

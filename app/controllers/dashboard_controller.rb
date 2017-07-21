@@ -5,8 +5,8 @@ class DashboardController < ApplicationController
   before_action :set_incomes, on: :index
 
   def index
-    @expenses ||= Expense.last(50).sort_by(&:created_at)
-    @incomes ||= Income.last(50).sort_by(&:created_at)
+    @last_expenses = Expense.last(10)
+    @last_incomes = Income.last(10)
   end
 
   def set_expenses
