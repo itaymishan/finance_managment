@@ -15,7 +15,6 @@
 
 <h3>Bucket: <%= WorkExpenseIn.all.map{|w| w.amount.to_d}.sum -  WorkExpenseOut.all.map{|w| w.amount.to_d}.sum %>$</h3>
 
-<h2>Data: (<%= @expenses.map(&:date).min.strftime("%d/%m/%Y")  %> - <%= @expenses.map(&:date).max.strftime("%d/%m/%Y") %>)</h2>
 
 <table>
   <tr>

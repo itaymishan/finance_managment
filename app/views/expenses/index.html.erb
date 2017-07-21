@@ -19,7 +19,7 @@
     <%  curr_array = Currency.all.map { |cur| [cur.name, cur.id] } %>
     <%= f.select :currency_id, curr_array.sort %>
     <%= f.label :amount %>
-    <%= f.text_field :amount, size: 1  %>
+    <%= f.text_field :amount, size: 1, prepend: "$"  %>
     <%= f.label :comments %>
     <%= f.text_field :comments, size: 4 %>
     <%= f.submit "OK" %>
