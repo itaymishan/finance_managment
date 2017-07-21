@@ -3,10 +3,10 @@
 <div class="filter_options_container">
   <form class="filter_form">
     <%= label_tag(:from, "from:") %>
-    <%= select("filter", "from_year", 2013..2017, selected: @expenses.map(&:year).min) %>
+    <%= select("filter", "from_year", 2013..2018, selected: @expenses.map(&:year).min) %>
     <%= select("filter", "from_month", 1..12, selected: @expenses.map(&:month).min) %>
     <%= label_tag(:to, "to:") %>
-    <%= select("filter", "to_year", 2013..2017, selected: @expenses.map(&:year).max) %>
+    <%= select("filter", "to_year", 2013..2018, selected: @expenses.map(&:year).max) %>
     <%= select("filter", "to_month", 1..12, selected: @expenses.map(&:month).max) %>
     <%= select("filter", "currency", ['CAD', 'ILS', 'USD']) %>
     <input type="submit" value="Filter" />
@@ -14,7 +14,6 @@
 </div>
 
 <h3>Bucket: <%= WorkExpenseIn.all.map{|w| w.amount.to_d}.sum -  WorkExpenseOut.all.map{|w| w.amount.to_d}.sum %>$</h3>
-
 
 <table>
   <tr>
