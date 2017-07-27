@@ -7,6 +7,7 @@ class DashboardController < ApplicationController
   def index
     @last_expenses = Expense.last(10)
     @last_incomes = Income.last(10)
+    @monthly_summary = MonthlySummaryService.new.monthly_summary(params[:filter][:from_year]) if params[:filter].present?
   end
 
   def set_expenses

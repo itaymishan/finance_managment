@@ -65,3 +65,21 @@
 </div>
 
 <h3>Bucket: <%= WorkExpenseIn.all.map{|w| w.amount.to_d}.sum -  WorkExpenseOut.all.map{|w| w.amount.to_d}.sum %>$</h3>
+
+<% if @monthly_summary.present? %>
+  <div class="row">
+    <% @monthly_summary.each do |group|  %>
+      <div class="col-sm-3">
+        <h3><%= group[:month] %>, <%= group[:year] %></h3>
+        <h4>income</h4>
+        <% group[:incomes].each do |income|  %>
+          <h5><%= income[:total].to_i %> ( <%= income[:currency]%> )<h5>
+        <% end %>
+        <h4>expense</h4>
+        <% group[:expenses].each do |expense|  %>
+          <h5><%= expense[:total].to_i %> ( <%= expense[:currency]%> )<h5>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+ <% end %>
