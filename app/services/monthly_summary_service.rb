@@ -1,32 +1,76 @@
 class MonthlySummaryService
 
   def monthly_summary(s_year = DateTime.now.year)
-    # year, month, total_expenses(all currencies), total_incomes(all currencies), cashflow
     result = []
 
     for i in 1..12 do
-      hash = {}
-      hash[:year] = s_year
-      hash[:month] = i
-      hash[:incomes] = []
-      hash[:expenses] = []
+      hash = {
+        year: s_year, 
+        month: i, 
+        incomes: [], 
+        expenses: []
+      }
 
-      incomes = Income.where(year: s_year).where(month: i)
-        .joins(:currency)
-        .group(:year, :month, 'currencies.name')
-        .sum(:amount)
-        .sort
+      incomes = monthly_income_group(s_year, i)
+      expenses = monthly_expense_group(s_year, i)
 
-      expenses = Expense.where(year: s_year).where(month: i)
-        .joins(:currency)
-        .group(:year, :month, 'currencies.name')
-        .sum(:amount)
-        .sort
+      incomes.each{|income| hash[:incomes] << {total: income[1] , currency: income[0][2] }}
+      expenses.each{|ex| hash[:expenses] << {total: ex[1] , currency: ex[0][2] }}
 
-        incomes.each{|income| hash[:incomes] << {total: income[1] , currency: income[0][2] }}
-        expenses.each{|ex| hash[:expenses] << {total: ex[1] , currency: ex[0][2] }}
-        result << hash
-    end      
+      result << hash
+    end    
     result
+  end
+
+  def yearly_summary(s_year = DateTime.now.year)
+    result = []
+    for i in 2013..DateTime.now.year do
+      hash = {
+        year: i, 
+        incomes: [], 
+        expenses: []
+      }
+
+      incomes = yearly_income_group(s_year)
+      expenses = yearly_expense_group(s_year)
+
+      incomes.each{|income| hash[:incomes] << {total: income[1] , currency: income[0][2] }}
+      expenses.each{|ex| hash[:expenses] << {total: ex[1] , currency: ex[0][2] }}
+
+      result << hash
+    end  
+  end
+
+  def yearly_expense_group(year)
+    Expense.where(year: year)
+      .joins(:currency)
+      .group(:year, :month, 'currencies.name')
+      .sum(:amount)
+      .sort
+  end
+
+  def yearly_income_group(year)
+    Income.where(year: year)
+      .joins(:currency)
+      .group(:year, :month, 'currencies.name')
+      .sum(:amount)
+      .sort
+  end
+
+
+  def monthly_expense_group(year, month)
+    Expense.where(year: year).where(month: month)
+      .joins(:currency)
+      .group(:year, :month, 'currencies.name')
+      .sum(:amount)
+      .sort
+  end
+
+  def monthly_income_group(year, month)
+    Income.where(year: year).where(month: month)
+      .joins(:currency)
+      .group(:year, :month, 'currencies.name')
+      .sum(:amount)
+      .sort
   end
 end

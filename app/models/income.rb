@@ -17,6 +17,7 @@ class Income < ActiveRecord::Base
 
   belongs_to :income_source
   belongs_to :currency
+  acts_as_taggable # Alias for acts_as_taggable_on :tags
 
   scope :between_dates, -> (start_year, start_month, end_year, end_month) {
     where(year: start_year..end_year).where(month: start_month..end_month)

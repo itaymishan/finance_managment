@@ -22,6 +22,8 @@ class Expense < ActiveRecord::Base
   belongs_to :category
   belongs_to :user
   belongs_to :currency
+  
+  acts_as_taggable # Alias for acts_as_taggable_on :tags
 
   enum expense_types: {
     home: 'home',

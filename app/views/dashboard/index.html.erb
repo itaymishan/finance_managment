@@ -83,3 +83,21 @@
     <% end %>
   </div>
  <% end %>
+
+ <% if @yearly_summary.present? %>
+  <div class="row">
+    <% @yearly_summary.each do |group|  %>
+      <div class="col-sm-3">
+        <h3><%= group[:year] %></h3>
+        <h4>income</h4>
+        <% group[:incomes].each do |income|  %>
+          <h5><%= income[:total].to_i %> ( <%= income[:currency]%> )<h5>
+        <% end %>
+        <h4>expense</h4>
+        <% group[:expenses].each do |expense|  %>
+          <h5><%= expense[:total].to_i %> ( <%= expense[:currency]%> )<h5>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+ <% end %>
