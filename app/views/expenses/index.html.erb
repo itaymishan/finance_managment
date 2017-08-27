@@ -1,29 +1,6 @@
 <div class='container'>
 <% if @expenses.present?%>
   <h1> By Month(<%= @expenses.last.month %>/<%= @expenses.last.year %>) </h1>
-  <h2>Insert New Expense</h2>
-  <%= form_for Expense.new, url: {action: "create"} do |f| %>
-    <%= f.label :year %>
-    <%= f.text_field :year, value: DateTime.now.year, size: 2 %>
-    <%= f.label :month %>
-    <%= f.text_field :month, value: DateTime.now.month, size: 1 %>
-    <%= f.label :category_id %>
-    <%  expense_array = Category.active.map { |src| [src.hebrew_name, src.id] } %>
-    <%= f.select :category_id, expense_array %>
-    <%= f.label :user_id %>
-    <%  users_array = User.all.map { |src| [src.first_name, src.id] } %>
-    <%= f.select :user_id, users_array %>
-    <%= f.label :expense_type %>
-    <%= f.select :expense_type, Expense::expense_types %>
-    <%= f.label :currency_id %>
-    <%  curr_array = Currency.all.map { |cur| [cur.name, cur.id] } %>
-    <%= f.select :currency_id, curr_array.sort %>
-    <%= f.label :amount %>
-    <%= f.text_field :amount, size: 1, prepend: "$"  %>
-    <%= f.label :comments %>
-    <%= f.text_field :comments, size: 4 %>
-    <%= f.submit "OK" %>
-  <% end %>
 <%end%>
 
   <h2>Filter</h2>
@@ -51,13 +28,15 @@
   <% end %>
 
  
+  <div class="row">
+    <div class="col-sm-4">
 
   <% if params[:filter].present? && @expenses.present?  %>
     <% category_groups = @expenses.group_by{|e| [e.category.hebrew_name, e.currency.name]}.map{|k, v| { category: k[0], currency: k[1], amount: v.map(&:amount).sum } }.sort_by{|item| -item[:amount]} %>
-    <h2>By Category</h2>
+    <h2>Grouped</h2>
     <table class="table table-hover">
       <tr>
-        <th> Categotry </th>
+        <th> Category </th>
         <th> Amount </th>
         <th> Currency </th>
       </tr>
@@ -69,8 +48,9 @@
         </tr>
       <% end %>
     </table>
+    </div>
 
-
+  <div class="col-sm-8">
   <h2>Expenses</h2>
   <table class="table table-hover">
     <tr>
@@ -98,4 +78,5 @@
     <% end %>
   </table>
 <% end %>
+</div>
 </div>

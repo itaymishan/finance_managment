@@ -20,9 +20,9 @@ ActiveRecord::Schema.define(version: 20170810224936) do
     t.string   "english_name"
     t.string   "hebrew_name"
     t.boolean  "luxury"
-    t.boolean  "active",       default: true, null: false
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.boolean  "active",       default: true, null: false
   end
 
   create_table "currencies", force: :cascade do |t|
