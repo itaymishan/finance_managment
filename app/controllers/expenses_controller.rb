@@ -8,6 +8,7 @@ class ExpensesController < ApplicationController
   end
 
   def create
+debugger    
     if params[:repeat_times].present?
       times = params[:repeat_times].to_i
       i = 0

@@ -19,9 +19,9 @@ class Category < ActiveRecord::Base
   scope :active_sorted_freq, -> { 
     where(active: true)
       .joins(:expenses)
-      .group('categories.hebrew_name')
+      .group('categories.hebrew_name', 'categories.id')
       .count.sort_by {|_key, value| -value}
-      .map{|item| item[0]} 
+      .map{|item| [item[1], item[0]]}.to_h.values
   }
   
 end
