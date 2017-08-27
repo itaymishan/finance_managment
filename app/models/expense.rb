@@ -22,6 +22,12 @@ class Expense < ActiveRecord::Base
   belongs_to :category
   belongs_to :user
   belongs_to :currency
+
+  before_create :set_expense_type
+
+  def set_expense_type
+    self.expense_type = 0
+  end
   
   acts_as_taggable # Alias for acts_as_taggable_on :tags
 
