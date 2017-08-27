@@ -7,8 +7,7 @@ class ExpensesController < ApplicationController
     @expenses.sort_by(&:created_at).reverse if @expenses.present?
   end
 
-  def create
-debugger    
+  def create    
     if params[:repeat_times].present?
       times = params[:repeat_times].to_i
       i = 0
