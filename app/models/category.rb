@@ -16,12 +16,16 @@ class Category < ActiveRecord::Base
   has_many :expenses
 
   scope :active, -> { where(active: true) }
+  # scope :active_sorted_freq, -> { 
+  #   where(active: true)
+  #     .joins(:expenses)
+  #     .group('categories.hebrew_name', 'categories.id')
+  #     .count.sort_by {|_key, value| -value}
+  #     .map{|item| [item[1], item[0]]}.to_h.values
+  # }
+
   scope :active_sorted_freq, -> { 
-    where(active: true)
-      .joins(:expenses)
-      .group('categories.hebrew_name', 'categories.id')
-      .count.sort_by {|_key, value| -value}
-      .map{|item| [item[1], item[0]]}.to_h.values
+    active.pluck(:hebrew_name, :id)
   }
   
 end
