@@ -8,7 +8,7 @@ class ExpensesController < ApplicationController
   end
 
   def create    
-    if params[:repeat_times].present?
+    if params[:repeat_times].present? && params[:repeat_times].to_i > 1
       times = params[:repeat_times].to_i
       i = 0
       while i < times do
